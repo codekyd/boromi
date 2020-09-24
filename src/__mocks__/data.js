@@ -4,14 +4,12 @@
       message: 'You have successfully signed up',
       data: {
           id: 1,
-          username: 'johndoe',
-          fullName: 'John Doe',
+          name: 'John Doe',
           token: "JohnDoeToken",
           isAdmin: true
       }
     },
      signupData: {
-      username: 'johndoe',
       name: 'John Doe',
       email: "johndoe@me.co",
       password: 'johndoe1234',

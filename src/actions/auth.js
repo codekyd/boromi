@@ -57,11 +57,10 @@ export const loginUser = ({ email, password}) => async dispatch => {
 
 
 // dispatch register action
-export const registerUser = ({username, name, email, password, isAdmin}) => async dispatch => {
+export const registerUser = ({ name, email, password, isAdmin}) => async dispatch => {
 	dispatch({ type: REGISTER_REQUEST});
 	try {
 		const res = await axios.post("/api/signup", {
-			username,
 			name,
 			email,
 			password,
