@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 
 
-const token = localStorage.getItem("token")
+
 
 // dispatch load User action
 export  const loadUser = (token) =>   async dispatch => {
@@ -21,7 +21,7 @@ export  const loadUser = (token) =>   async dispatch => {
 			);
 			dispatch({
 				type: USER_LOADED_SUCCESS,
-				payload: res.data
+				payload: res.data.user
 			});
 		} catch (err) {
 			dispatch({
@@ -68,7 +68,7 @@ export const registerUser = ({ name, email, password, isAdmin}) => async dispatc
 		});
 		dispatch({
 			type: REGISTER_SUCCESS,
-			payload: res.data
+			payload: res.data.user
 		});
 	} catch (err) {
 		dispatch({

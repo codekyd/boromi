@@ -87,7 +87,8 @@ const  SignUp = ({loading, isAuthenticated, registerUser, errors}) => {
         e.preventDefault()
         // check if the form is valid
        if(validateData()){
-           registerUser({name,email,password})
+        //    fire a register action
+           registerUser({name,email,password, isAdmin: false})
        }
     }
     // redirects on register success

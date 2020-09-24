@@ -5,6 +5,7 @@
  */
 import { createServer, RestSerializer, Model, hasMany, belongsTo, Response} from "miragejs";
 import dayjs from  "dayjs"
+import { ArrowLeftSharp } from "@material-ui/icons";
 
 export default  () => {
 	createServer({
@@ -92,29 +93,32 @@ export default  () => {
 			// Auth and Users
 			this.post("/api/auth", (schema, request) => {
 				let attrs = JSON.parse(request.requestBody);
+				console.log(attrs);
+
 				let user = schema.users.findBy({ token: attrs});
 				if(!user) {
-					return new Response(401, { some: 'header' }, { error: 'Token Not found' });
+					return new Response(401, { some: 'header' }, 'Token Not found' );
 				}
 				return user;
 			})
-			this.post("/api/register", (schema, request) => {
+			this.post("/api/signup", (schema, request) => {
 				let attrs = JSON.parse(request.requestBody);
-				console.log(attrs);
+
 				let user = schema.users.findBy({email: attrs.email})
+				const tokenString = attrs.name.split(" ").join("").toString();
 				if(user) {
-					return new Response(400, { some: 'header' }, { error: 'User already exist' });
+					return new Response(400, { some: 'header' },  'User with this email already exist' );
 				}else  {
-					return schema.users.create(attrs)
+					return schema.users.create({...attrs, token : `${tokenString}Token`})
 				}
 
 			})
 			this.post("/api/login", (schema, request) => {
 				let attrs = JSON.parse(request.requestBody);
-				console.log(attrs);
+
 				const user = schema.users.findBy({ email: attrs.email, password: attrs.password})
 				if(!user) {
-					return new Response(404, { some: 'header' }, { error: 'User not found' });
+					return new Response(404, { some: 'header' },  'User not found' );
 				}
 				return user
 			})

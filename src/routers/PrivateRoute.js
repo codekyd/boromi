@@ -1,16 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {loadUser} from "../actions/auth";
 
+// Private route to check if a user is authenticated
 const PrivateRoute = ({ component: Component, auth: { isAuthenticated, loading},loadUser, ...rest}) => {
-
+	const token = localStorage.getItem("token")
 	useEffect(() => {
-		loadUser()
-
-
-	}, [])
+			loadUser(JSON.stringify(token))
+	},[loadUser,token])
 	return(
 		<Route
 			{...rest}
