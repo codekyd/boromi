@@ -7,7 +7,7 @@ const Home = () => {
 	return(
 		<Layout>
 
-			<h1>Hi, Welcome to the Home of Events</h1>
+			<h1>Hi</h1>
 		</Layout>
 	)
 }

@@ -9,7 +9,11 @@ import dayjs from  "dayjs"
 export default  () => {
 	createServer({
 		serializers: {
-			reservation: RestSerializer.extend({
+			payment: RestSerializer.extend({
+				include: ["loan"],
+				embed: true
+			}),
+			loanRequest: RestSerializer.extend({
 				include: ["loan"],
 				embed: true
 			}),
@@ -18,22 +22,28 @@ export default  () => {
 		models: {
 			user: Model.extend({
 				loans: hasMany(),
+				loanRequests: hasMany(),
 				payments: hasMany()
 
 			}),
 			loan: Model.extend({
 				payments: hasMany(),
-				user: belongsTo()
+				user: belongsTo(),
+				loanRequest: hasMany()
 			}),
 			payments: Model.extend({
 				loan: belongsTo(),
+				user: belongsTo()
+			}),
+			loanRequests: Model.extend({
+				loans: belongsTo(),
 				user: belongsTo()
 			})
 		},
 		// create seeds for initialization of the app
 		seeds(server) {
 			server.create("user",{
-				name:"Customer 1",
+				name:"James Bond",
 				email: "customer@me.co",
 				isAdmin: false,
 				password: "customer1234",
@@ -62,6 +72,20 @@ export default  () => {
 
 			]
 			server.create("loan", {user: userModel, loanData});
+			//creates a customer
+			server.create("user",{
+				name:"James Bond",
+				email: "customer@me.co",
+				isAdmin: false,
+				password: "customer1234",
+				token: "Customer1Token"
+			})
+			// creates a loan request
+			let loanRequest  = {
+				status: "pending",
+			}
+			server.create("loanRequest",loanRequest)
+
 		},
 
 		routes() {
@@ -101,7 +125,7 @@ export default  () => {
 			})
 			this.post("/api/loans", (schema, request) => {
 				let attrs = JSON.parse(request.requestBody);
-				return schema.loans.create(attrs)
+				 return new Response(201, { some: 'header' }, { msg: 'New Loan Created successfully', data:	 schema.loans.create(attrs) });
 
 			})
 			this.get("/api/loans/:id", (schema, request) => {
