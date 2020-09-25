@@ -8,22 +8,19 @@ import React from "react";
 import {Box, Grid, Paper, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 /*
  *  --------------------------------------------------------------------------
  *                             Internal Dependencies
  *  --------------------------------------------------------------------------
  */
-import AuthFooter from "./AuthFooter";
-import {ButtonLink} from "../Buttons/Buttons";
-import { Link } from "react-router-dom";
+import Footer from "../Layout/Footer";
+
 
 const useStyles =  makeStyles({
     root: {
         minHeight: '100%',
         background: "#1a268f",
-        // background: ` background: #764ebe;
-        //     background: linear-gradient(56deg,#6bbfd8 0%, #764ebe 100%),
-        //     no-repeat center center fixed`,
         backgroundSize: 'cover',
         height: 'auto'
 
@@ -74,7 +71,7 @@ const AuthLayout = ({ children}) => {
                     </Grid>
 
                 </Grid>
-                <AuthFooter/>
+                <Footer/>
             </Box>
 
         </>
