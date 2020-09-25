@@ -15,13 +15,15 @@ import PropTypes from "prop-types";
  */
 import AuthFooter from "./AuthFooter";
 import {ButtonLink} from "../Buttons/Buttons";
+import { Link } from "react-router-dom";
 
 const useStyles =  makeStyles({
     root: {
         minHeight: '100%',
-        background: ` background: #764ebe;
-            background: linear-gradient(56deg,#6bbfd8 0%, #764ebe 100%),
-            no-repeat center center fixed`,
+        background: "#1a268f",
+        // background: ` background: #764ebe;
+        //     background: linear-gradient(56deg,#6bbfd8 0%, #764ebe 100%),
+        //     no-repeat center center fixed`,
         backgroundSize: 'cover',
         height: 'auto'
 
@@ -59,12 +61,12 @@ const AuthLayout = ({ children}) => {
                     >
 
                         <Paper className={classes.authCard}>
-                            <a href="/">
+                            <Link to="/">
                                 <Typography variant="h4" align="center" display="block" gutterBottom>
-                                   <img src="/logo192.png" width="60"/>
+                                   <img src="/logo192.png" alt="Logo" width="60"/>
                                 </Typography>
 
-                            </a>
+                            </Link>
                             {children}
 
                         </Paper>

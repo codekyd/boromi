@@ -30,7 +30,7 @@ const AuthFooter = () => {
                 className={classes.text}>
 
                 Copyright © 2020
-                All rights reserved | <a href="/" className={classes.link}>Tickeets</a>
+                All rights reserved | <a href="/" className={classes.link}>Boromi</a>
 
             </Typography>
 

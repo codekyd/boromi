@@ -22,6 +22,15 @@ const useStyles =  makeStyles({
     buttonLink: {
         color: "#1a268f",
         textDecoration: "none"
+    },
+    secondaryLink: {
+        color: "#ffd467",
+        padding: "10px 30px",
+        marginTop: "30px",
+        fontSize: "17px",
+        borderRadius: "2px",
+        border: "1.5px solid #ffd467",
+        textDecoration: "none"
     }
 })
 
@@ -63,20 +72,18 @@ PrimaryButton.propTypes = {
 }
 
 
-export const SecondaryButton = ({title, type}) => {
+export const SecondaryButton = ({ linkTo,content}) => {
     const classes = useStyles()
     return(
-        <Button variant="contained"
-                color="secondary"
-                fullWidth
-                type={type}
-                className={classes.root}>
-            {title}
-        </Button>
+        <Link
+            to={linkTo}
+            className={classes.secondaryLink}>
+            {content}
+        </Link>
     )
 }
 SecondaryButton.propTypes = {
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired
+    linkTo: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
 
 }
