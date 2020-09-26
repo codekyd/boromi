@@ -27,6 +27,7 @@ export const createLoan = ({title,amount,interest, maxPayBack}) => async dispatc
 }
 //Action to get All Loans
 export const getAllLoans = () => async dispatch => {
+    console.log("Here...............");
     dispatch({ type: types.GET_ALL_LOANS_REQUEST })
     try {
         const res = await axios.get("/api/loans")
@@ -59,7 +60,7 @@ export const getLoanByID = (loanID) => async dispatch => {
     }
 }
 //Action to Update a loan
-export const updateLoanByID = ( loanID, loanData ) => async dispatch => {
+export const updateLoanByID = ( loanData, loanID ) => async dispatch => {
     dispatch({ type: types.UPDATE_LOAN_BY_ID_REQUEST })
     try {
         const res = await axios.patch(`/api/loans/${loanID}`,loanData)

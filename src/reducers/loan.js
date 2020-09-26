@@ -3,7 +3,7 @@ import * as types from "../actions/types";
 const initialState = {
     loading: false,
     singleLoan: null,
-    allLoans: {},
+    allLoans: null,
     successMsg: "",
     error: null
 }
@@ -47,7 +47,7 @@ export default (state = initialState, action) => {
                         return {
                             ...state,
                             loading: false,
-                            singleLoan: payload
+                            successMsg: payload
                         }
 
                     case types.DELETE_LOAN_BY_ID_SUCCESS:

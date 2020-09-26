@@ -12,7 +12,8 @@ const NewLoan = ({ loading, createLoan, error,successMsg }) => {
             action={createLoan}
             loading={loading}
             error={error}
-            successMsg={successMsg}/>
+            successMsg={successMsg}
+            buttonTitle="create"/>
         </AppNav>
     )
 }

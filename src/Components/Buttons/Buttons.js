@@ -30,6 +30,7 @@ const useStyles =  makeStyles({
         fontSize: "17px",
         borderRadius: "2px",
         border: "1.5px solid #ffd467",
+        display: "inline-block",
         textDecoration: "none"
     }
 })

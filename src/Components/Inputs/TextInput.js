@@ -64,8 +64,14 @@ const TextInput = ({
 TextInput.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
+    type: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+    ]).isRequired,
+    value:PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+    ]).isRequired,
     error: PropTypes.string,
     handleInputChange: PropTypes.func.isRequired
 };

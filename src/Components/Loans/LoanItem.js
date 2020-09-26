@@ -9,18 +9,11 @@ import { ButtonLink } from '../Buttons/Buttons';
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
+    padding: 30
   },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
+  cardActions: {
+    justifyContent: "space-between"
+}
 });
 
  const LoanItem =({ title, amount, interest,maxPayBack, id }) => {
@@ -28,7 +21,7 @@ const useStyles = makeStyles({
   dayjs.extend(relativeTime)
 
   return (
-    <Grid item md={4}>
+    <Grid item md={5}>
         <Card className={classes.root}>
             <CardContent>
                 <Typography variant="h4" gutterBottom>
@@ -44,8 +37,9 @@ const useStyles = makeStyles({
                     Repayment   {dayjs().to(maxPayBack)}
                   </Typography>
             </CardContent>
-            <CardActions>
+            <CardActions className={classes.cardActions}>
               <ButtonLink linkTo={`/loans/${id}`} content="View Loan"/>
+              <ButtonLink linkTo={`/loans/${id}/requests`} content="View Loan Requests"/>
             </CardActions>
         </Card>
     </Grid>

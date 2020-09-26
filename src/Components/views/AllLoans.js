@@ -11,7 +11,6 @@ import Loader from "../Loader/Loader"
 
 
 const  AllLoans = ( {allLoans, getAllLoans, loading}) => {
-	console.log(allLoans);
 
 	useEffect(() => {
 		getAllLoans()
@@ -22,7 +21,7 @@ const  AllLoans = ( {allLoans, getAllLoans, loading}) => {
 			{/* checks if there are loans and display them */}
 		{	loading ? <Loader/> :
 		<LoansLayout>
-			{ allLoans.length === 0 ? null : allLoans && !loading && allLoans.loans.map((loan) =><LoanItem key={loan.id} {...loan}/>)}
+			{ allLoans && !loading && allLoans.loans.map((loan) =><LoanItem key={loan.id} {...loan}/>)}
 		</LoansLayout>
 		}
 		</AppNav>

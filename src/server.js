@@ -128,13 +128,18 @@ export default  () => {
 			})
 			this.get("/api/loans/:id", (schema, request) => {
 				let loanID = request.params.id
-				return  schema.loans.find(loanID);
+				let loan = schema.loans.find(loanID);
+				if(!loan) {
+					return new Response(404, { some: 'header' },  'Loan Not Found' );
+				}
+				return loan
 			})
 			this.patch("/api/loans/:id", (schema, request) => {
 				let loanID = request.params.id;
 				let attrs = JSON.parse(request.requestBody);
 				let loan =  schema.loans.find(loanID);
-				return loan.update(attrs)
+				 loan.update(attrs)
+				return new Response(201, { some: 'header' },  'Loan Updated successfully' );
 
 			})
 			this.delete("/api/loans/:id", (schema, request) => {

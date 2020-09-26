@@ -3,12 +3,14 @@ import Card from "@material-ui/core/Card"
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography"
 import { makeStyles } from '@material-ui/core/styles';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { PrimaryButton } from '../Buttons/Buttons'
 import TextInput from '../Inputs/TextInput'
 import Loader from '../Loader/Loader'
 import LoansLayout from './LoansLayout'
-import { formatMoney } from '../../utils/helpers';
 import Alerts from '../Alerts/Alerts';
+import { Icon } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const useStyle = makeStyles({
     root:{
@@ -17,12 +19,13 @@ const useStyle = makeStyles({
         padding:"30px"
     }
 })
-const LoanForm = ({header,loan, loading, action, error, successMsg}) => {
+const LoanForm = ({header,fetchedLoan, loading, action, error, successMsg, buttonTitle}) => {
     const classes = useStyle()
+
     const initialState = {
-        title: "",
-        amount: 0,
-        interest: 1,
+        title: fetchedLoan ? fetchedLoan.loan.title : "",
+        amount: fetchedLoan ? parseFloat(fetchedLoan.loan.amount ).toLocaleString("en-NG",{style: 'decimal'}) : 0,
+        interest: fetchedLoan ? fetchedLoan.loan.interest : 1,
         maxPayBack: 3,
     }
     const [loanData, setLoanData] = useState(initialState);
@@ -41,7 +44,7 @@ const LoanForm = ({header,loan, loading, action, error, successMsg}) => {
         setLoanData({...loanData, [name]: value ? numValue : 0 })
     }
      else {
-        setLoanData({...loanData, [name]: value.trim()})
+        setLoanData({...loanData, [name]: value})
     }
 
     }
@@ -62,19 +65,28 @@ const LoanForm = ({header,loan, loading, action, error, successMsg}) => {
         // sends a new or update loan request
         e.preventDefault()
         if(validateData()){
-            action(loanData)
+           buttonTitle === "update" ?   action(loanData, fetchedLoan.loan.id) : action(loanData)
         }
     }
 
     return (
         <LoansLayout>
 
-               <Grid md={4}>
+               <Grid item md={5}>
                    <Card className={classes.root}>
                    {loading && <Loader/>}
                        <Typography variant="h6" align="center" gutterBottom>
                            {header}
                        </Typography>
+                       <Typography variant="body2" gutterBottom>
+                           <Link to="/loans">
+                           <Icon color="primary" fontSize="large">
+                           <ArrowBackIcon/>
+						</Icon>
+                           </Link>
+
+                       </Typography>
+
                        { successMsg && <Alerts successMsg={successMsg}/> }
                      { error &&   <Alerts error={error}/> }
                         <form noValidate autoComplete="off" onSubmit={onSubmit}>
@@ -109,7 +121,7 @@ const LoanForm = ({header,loan, loading, action, error, successMsg}) => {
                                 handleInputChange={handleInputChange}/>
                                 <PrimaryButton
                                     type="submit"
-                                    title="Create Loan"
+                                    title={`${buttonTitle} Loan`}
                                     />
                         </form>
                     </Card>
