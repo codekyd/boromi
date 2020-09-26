@@ -18,7 +18,7 @@ export const createLoan = ({title,amount,interest, maxPayBack}) => async dispatc
 
     } catch (err) {
         dispatch({
-            type: types.USER_LOADED_FAILURE,
+            type: types.CREATE_NEW_LOAN_FAILURE,
             payload: err.response.data
         })
 
@@ -30,6 +30,7 @@ export const getAllLoans = () => async dispatch => {
     dispatch({ type: types.GET_ALL_LOANS_REQUEST })
     try {
         const res = await axios.get("/api/loans")
+        console.log(res.data);
         dispatch({
             type: types.GET_ALL_LOANS_SUCCESS,
             payload: res.data
@@ -77,10 +78,10 @@ export const updateLoanByID = ( loanID, loanData ) => async dispatch => {
 export const deleteLoanByID = ( loanID ) => async dispatch => {
     dispatch({ type: types.DELETE_LOAN_BY_ID_REQUEST })
     try {
-        const res = await axios.delete(`/api/loans/${loanID}`)
+         await axios.delete(`/api/loans/${loanID}`)
         dispatch({
             type: types.DELETE_LOAN_BY_ID_SUCCESS,
-            payload: res.data
+            payload: loanID
         })
     } catch (err) {
         dispatch({

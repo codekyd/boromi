@@ -5,19 +5,18 @@
  */
 import { createServer, RestSerializer, Model, hasMany, belongsTo, Response} from "miragejs";
 import dayjs from  "dayjs"
-import { ArrowLeftSharp } from "@material-ui/icons";
 
 export default  () => {
 	createServer({
 		serializers: {
-			payment: RestSerializer.extend({
-				include: ["loan"],
+			loan: RestSerializer.extend({
+				include: ["user"],
 				embed: true
 			}),
-			loanRequest: RestSerializer.extend({
-				include: ["loan"],
-				embed: true
-			}),
+			// loanRequest: RestSerializer.extend({
+			// 	include: ["loan"],
+			// 	embed: true
+			// }),
 		},
 		// models
 		models: {
@@ -43,13 +42,6 @@ export default  () => {
 		},
 		// create seeds for initialization of the app
 		seeds(server) {
-			server.create("user",{
-				name:"James Bond",
-				email: "customer@me.co",
-				isAdmin: false,
-				password: "customer1234",
-				token: "Customer1Token"
-			})
 			let userModel = server.create("user", {
 				name: "John Doe",
 				email: 'johndoe@me.co',
@@ -57,22 +49,19 @@ export default  () => {
 				password: 'johndoe1234',
 				token: "JohnDoeToken"
 			});
-			let loanData =[
-				{
-					title: "Smart Instant",
-					amount: 500000,
-					interest: 10,
-					maxPayBack: dayjs().add(3, "month")
-				},
-				{
-					title: "Small Business",
-					amount: 15000000,
-					interest: 5,
-					maxPayBack:dayjs().add(6, "month")
-				}
-
-			]
-			server.create("loan", {user: userModel, loanData});
+			server.create("loan",{
+				user:userModel,title: "Smart Instant",
+				amount: 5000000,
+				interest: 10,
+				maxPayBack: dayjs().add(3, "month")
+			});
+			server.create("loan", {
+				user: userModel,
+				title: "Small Business",
+				amount: 15000000,
+				interest: 5,
+				maxPayBack:dayjs().add(6, "month"),
+			})
 			//creates a customer
 			server.create("user",{
 				name:"James Bond",
@@ -129,7 +118,12 @@ export default  () => {
 			})
 			this.post("/api/loans", (schema, request) => {
 				let attrs = JSON.parse(request.requestBody);
-				 return new Response(201, { some: 'header' }, { msg: 'New Loan Created successfully', data:	 schema.loans.create(attrs) });
+				const loan = schema.loans.findBy({title:attrs.title})
+				if(loan){
+					return new Response(400, { some: 'header' },  'Loan with this title already exist' );
+				}
+				schema.loans.create(attrs)
+				 return new Response(201, { some: 'header' },  'New Loan Created successfully' );
 
 			})
 			this.get("/api/loans/:id", (schema, request) => {
