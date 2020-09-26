@@ -3,9 +3,9 @@ import * as types from "../actions/types";
 const initialState = {
     loading: false,
     singleLoan: null,
-    allLoans: [],
+    allLoans: {},
     successMsg: "",
-    errors: null
+    error: null
 }
 export default (state = initialState, action) => {
     const { type, payload } = action
@@ -23,9 +23,9 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                allLoans: {...state.allLoans, payload},
                 singleLoan: null,
-                errors: null
+                successMsg: payload,
+                error: null
             }
             case types.GET_LOAN_BY_ID_SUCCESS:
                 return {
@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
                     loading: false,
                     singleLoan: payload,
                     allLoans: null,
-                    errors: null,
+                    error: null,
                 }
                 case types.GET_ALL_LOANS_SUCCESS:
                     return {
@@ -41,7 +41,7 @@ export default (state = initialState, action) => {
                         loading: false,
                         singleLoan: null,
                         allLoans: payload,
-                        errors: null
+                        error: null
                     }
                     case types.UPDATE_LOAN_BY_ID_SUCCESS:
                         return {
@@ -55,7 +55,18 @@ export default (state = initialState, action) => {
                             ...state,
                             loading: false,
                             allLoans: state.allLoans.filter((loan) => loan.id !== payload),
-                            errors: null
+                            error: null
+                        }
+                    case types.CREATE_NEW_LOAN_FAILURE:
+                    case types.GET_LOAN_BY_ID_FAILURE:
+                    case types.GET_ALL_LOANS_FAILURE:
+                    case types.UPDATE_LOAN_BY_ID_FAILURE:
+                    case types.DELETE_LOAN_BY_ID_FAILURE:
+                        return {
+                            ...state,
+                            loading: false,
+                            successMsg: "",
+                            error: payload
                         }
         default:
             return state;

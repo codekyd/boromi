@@ -13,7 +13,7 @@ const initialState = {
 	token: localStorage.getItem("token") || null,
 	user: null,
 	loading: false,
-	errors: null,
+	error: null,
 	isAuthenticated: false
 }
 
@@ -37,7 +37,7 @@ export  default   (state = initialState, action) => {
 				token: payload.token,
 				user: payload,
 				isAuthenticated: true,
-				errors: null
+				error: null
 
 			}
 		case USER_LOADED_FAILURE:
@@ -50,7 +50,7 @@ export  default   (state = initialState, action) => {
 				user: null,
 				token: null,
 				isAuthenticated: false,
-				errors: payload
+				error: payload
 		}
 
 		default:

@@ -11,7 +11,9 @@ import { combineReducers} from "redux";
  *  --------------------------------------------------------------------------
  */
 import auth from "./auth";
+import loans from "./loan"
 
 export default combineReducers({
 	auth,
+	loans
 })
