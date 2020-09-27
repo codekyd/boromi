@@ -24,7 +24,7 @@ const LoanForm = ({header,fetchedLoan, loading, action, error, successMsg, butto
 
     const initialState = {
         title: fetchedLoan ? fetchedLoan.loan.title : "",
-        amount: fetchedLoan ? parseFloat(fetchedLoan.loan.amount ).toLocaleString("en-NG",{style: 'decimal'}) : 0,
+        amount: fetchedLoan ? parseFloat(fetchedLoan.loan.amount ).toLocaleString("en-NG",{style: 'decimal'})  : 0,
         interest: fetchedLoan ? fetchedLoan.loan.interest : 1,
         maxPayBack: 3,
     }

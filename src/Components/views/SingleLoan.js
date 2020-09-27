@@ -34,12 +34,20 @@ const SingleLoan = ({history,match, loading, singleLoan, getLoanByID, deleteLoan
         deleteLoanByID(singleLoanID);
         history.push("/loans")
     }
+    //  calculate the expected duration of the loan
+    let chosenDay
+    let expectedDay
+    if(singleLoan) {
+        chosenDay = dayjs().month((singleLoan.loan.maxPayBack) -1).format("M");
+        expectedDay = dayjs().add(chosenDay, "M");
+    }
+
     return (
         <AppNav>
             {
                 loading ? <Loader/> :
                 singleLoan && !loading &&
-                <LoansLayout>
+                <LoansLayout title={singleLoan.loan.title}>
                     <Grid item md={6}>
                         <Card className={classes.root}>
                             <CardContent>
@@ -62,7 +70,9 @@ const SingleLoan = ({history,match, loading, singleLoan, getLoanByID, deleteLoan
                                 {formatMoney(singleLoan.loan.amount)}
                             </Typography>
                             <Typography variant="body2" gutterBottom>
-                            Repayment   {dayjs().to(singleLoan.loan.maxPayBack)}
+                            Repayment   {
+                            expectedDay.fromNow()
+                            }
                             </Typography>
                             </CardContent>
                             <CardActions className={classes.cardActions}>
@@ -72,6 +82,9 @@ const SingleLoan = ({history,match, loading, singleLoan, getLoanByID, deleteLoan
                         </Card>
                     </Grid>
                     <Grid item md={12}>
+                        <Typography variant="h6">
+                        {singleLoan.loan.title} Loan requests
+                        </Typography>
                         <RequestTable/>
                     </Grid>
                 </LoansLayout>

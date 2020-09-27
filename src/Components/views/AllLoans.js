@@ -20,7 +20,7 @@ const  AllLoans = ( {allLoans, getAllLoans, loading}) => {
 		<AppNav>
 			{/* checks if there are loans and display them */}
 		{	loading ? <Loader/> :
-		<LoansLayout>
+		<LoansLayout title="All Loans">
 			{ allLoans && !loading && allLoans.loans.map((loan) =><LoanItem key={loan.id} {...loan}/>)}
 		</LoansLayout>
 		}

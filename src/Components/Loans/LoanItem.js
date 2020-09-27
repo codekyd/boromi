@@ -19,7 +19,9 @@ const useStyles = makeStyles({
  const LoanItem =({ title, amount, interest,maxPayBack, id }) => {
   const classes = useStyles();
   dayjs.extend(relativeTime)
-
+ let chosenDay = dayjs().month((maxPayBack) -1).format("M");
+ let expectedDay = dayjs().add(chosenDay, "M");
+ console.log(expectedDay);
   return (
     <Grid item md={5}>
         <Card className={classes.root}>
@@ -34,7 +36,10 @@ const useStyles = makeStyles({
                   {interest}% Interest
                   </Typography>
                   <Typography variant="body2" gutterBottom>
-                    Repayment   {dayjs().to(maxPayBack)}
+                    Repayment   {
+
+                    expectedDay.fromNow()
+                    }
                   </Typography>
             </CardContent>
             <CardActions className={classes.cardActions}>

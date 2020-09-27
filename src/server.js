@@ -53,14 +53,14 @@ export default  () => {
 				user:userModel,title: "Smart Instant",
 				amount: 5000000,
 				interest: 10,
-				maxPayBack: dayjs().add(3, "month")
+				maxPayBack: 3
 			});
 			server.create("loan", {
 				user: userModel,
 				title: "Small Business",
 				amount: 15000000,
 				interest: 5,
-				maxPayBack:dayjs().add(6, "month"),
+				maxPayBack:6
 			})
 			//creates a customer
 			server.create("user",{
@@ -137,8 +137,10 @@ export default  () => {
 			this.patch("/api/loans/:id", (schema, request) => {
 				let loanID = request.params.id;
 				let attrs = JSON.parse(request.requestBody);
+				let  { title, amount, interest, maxPayBack } = attrs
+				amount = parseFloat(amount.split(",").join(""))
 				let loan =  schema.loans.find(loanID);
-				 loan.update(attrs)
+				 loan.update({title, amount,interest, maxPayBack})
 				return new Response(201, { some: 'header' },  'Loan Updated successfully' );
 
 			})
