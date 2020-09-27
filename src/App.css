@@ -8,6 +8,9 @@
   src: url(./fonts/gt-regular.woff2) format('woff');
   font-weight: normal;
 }
+body {
+  background-color:   #f1f3f8;
+}
 body, html {
   margin: 0;
   padding: 0;
@@ -15,8 +18,8 @@ body, html {
   font-family: "gt", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100%;
-  background-color: #f1f3f8;
+  min-height: 100%;
+  height: auto;
 }
 #root {
   height: 100%;
@@ -30,6 +33,5 @@ code {
 }
 
 section {
-  background: rgb(238, 190, 207);
   padding: 80px 10px;
 }

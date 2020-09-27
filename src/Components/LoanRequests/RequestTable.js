@@ -9,7 +9,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import dayjs from "dayjs"
 import Chip from '@material-ui/core/Chip';
-import RequestAction from './Actions';
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import RequestAction from './RequestActions';
+import PropTypes from 'prop-types';
+import { formatMoney } from '../../utils/helpers';
 
 const useStyles = makeStyles({
   table: {
@@ -29,58 +33,64 @@ const useStyles = makeStyles({
   }
 });
 
-function createData(customerName, repaymentChoice, dateRequested, status) {
-  return { customerName, repaymentChoice, dateRequested, status };
-}
-
-const rows = [
-    createData('John Doe', "Weekly", dayjs().format("DD/MM/YYYY") , "pending"),
-    createData('Ice  Sandwich', "Monthly", dayjs().format("DD/MM/YYYY"), "approved"),
-    createData('Eclair', "Daily", dayjs().format("DD/MM/YYYY"), "declined"),
-    createData('Cupcake', "Monthly", dayjs().format("DD/MM/YYYY"), "approved"),
-    createData('Gingerbread', "Weekly", dayjs().format("DD/MM/YYYY"), "pending"),
-    createData('John Doe', "Weekly", dayjs().format("DD/MM/YYYY") , "pending"),
-    createData('Ice  Sandwich', "Monthly", dayjs().format("DD/MM/YYYY"), "approved"),
-    createData('Eclair', "Daily", dayjs().format("DD/MM/YYYY"), "declined"),
-    createData('Cupcake', "Monthly", dayjs().format("DD/MM/YYYY"), "approved"),
-    createData('Gingerbread', "Weekly", dayjs().format("DD/MM/YYYY"), "pending"),
-];
-
-const RequestTable = () => {
+const RequestTable = ({ title,loading, loanRequests }) => {
   const classes = useStyles();
+  const handleUpdateRequest = (id, status) => {
+
+  }
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="Loan Request Table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Customer Name</TableCell>
-            <TableCell align="right">Repayment Choice</TableCell>
-            <TableCell align="right">Date Requested</TableCell>
-            <TableCell align="right">Status</TableCell>
-            <TableCell align="right">Action</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.customerName}>
-                <TableCell component="th" scope="row">
-                {row.customerName}
-                 </TableCell>
-                <TableCell align="right">{row.repaymentChoice}</TableCell>
-                <TableCell align="right">{row.dateRequested}</TableCell>
-                <TableCell align="right">
-                    <Chip label={row.status} className={classes[row.status]} />
-                </TableCell>
-                <TableCell align="right">
-                         <RequestAction/>
-                </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+           <Grid item md={12}>
+             <Typography variant="h6">
+                {title}
+              </Typography>
+              <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="Loan Request Table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Customer Name</TableCell>
+                      <TableCell align="right">Repayment Choice</TableCell>
+                      <TableCell align="right">Date Requested</TableCell>
+                      <TableCell align="right">Loan</TableCell>
+                      <TableCell align="right">Loan Amount</TableCell>
+                      <TableCell align="right">Status</TableCell>
+                      <TableCell align="right">Action</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    { loanRequests && loanRequests.map((loanRequest) => (
+                      <TableRow key={loanRequest.id}>
+                          <TableCell component="th" scope="loanRequest">
+                          {loanRequest.user.name}
+                          </TableCell>
+                          <TableCell align="right">{loanRequest.repaymentChoice}</TableCell>
+                          <TableCell align="right">{dayjs(loanRequest.dateRequested).format('DD/MM/YYYY')}</TableCell>
+                          <TableCell align="right">{loanRequest.loan.title}</TableCell>
+                          <TableCell align="right">{formatMoney(loanRequest.loan.amount)}</TableCell>
+                          <TableCell align="right">
+                              <Chip label={loanRequest.status} className={classes[loanRequest.status]} />
+                          </TableCell>
+                          <TableCell align="right">
+                                  <RequestAction
+                                      loanRequestStatus={loanRequest.status}
+                                      action={handleUpdateRequest}
+                                      id={loanRequest.id}
+                                  />
+                          </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+      </Grid>
+    </>
   );
+}
+RequestTable.propTypes = {
+  title: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
+  loanRequests: PropTypes.array.isRequired
 }
 
 export default RequestTable

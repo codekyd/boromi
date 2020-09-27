@@ -30,3 +30,15 @@ export const validatePassword =(password, minLength) => {
     return null
 
 }
+
+export const formatMoney = (naira) => {
+    return (naira).toLocaleString("en-NG", {
+      style: "currency",
+      currency: "NGN"
+    });
+  }
+
+//   export const toNumber = (value) => {
+//     if (typeof value === 'number') return value
+//     return parseInt(value.replace(/[^\d]+/g, ''))
+// }

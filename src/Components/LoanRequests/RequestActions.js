@@ -4,8 +4,10 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Icon from '@material-ui/core/Icon';
+import { connect } from 'react-redux';
+import { updateLoanRequestByID } from '../../actions/loanRequest'
 
-const RequestAction =() => {
+const RequestAction =({id, updateLoanRequestByID}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -15,7 +17,9 @@ const RequestAction =() => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleRequestAction = () => {
+  const handleRequestAction = (id,status) => {
+    updateLoanRequestByID(id,{status})
+
   }
 
   return (
@@ -32,10 +36,10 @@ const RequestAction =() => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleRequestAction} >Approve request</MenuItem>
-        <MenuItem onClick={handleRequestAction}>Decline Request</MenuItem>
+        <MenuItem onClick={() => {handleRequestAction(id,"approved")}} >Approve request</MenuItem>
+        <MenuItem onClick={() => handleRequestAction(id,"declined")}>Decline Request</MenuItem>
       </Menu>
     </div>
   );
 }
-export default RequestAction
+export default connect(null, { updateLoanRequestByID })(RequestAction)

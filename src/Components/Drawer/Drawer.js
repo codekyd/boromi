@@ -16,6 +16,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Container } from '@material-ui/core';
+import { ButtonLink } from '../Buttons/Buttons';
 
 const drawerWidth = 240;
 
@@ -67,17 +69,23 @@ const  AppNav = (props) => {
 			<div className={classes.toolbar} />
 			<Divider />
 			<List>
+				<ListItem button>
+					<ListItemIcon> <InboxIcon /></ListItemIcon>
+					<ListItemText>
+						<ButtonLink linkTo="/admin-dashboard" content="Dashboard"/>
+					</ListItemText>
+				</ListItem>
+
 					<ListItem button>
 						<ListItemIcon> <InboxIcon /></ListItemIcon>
 						<ListItemText>
-							All Events
+							<ButtonLink linkTo="/loans" content="All Loans"/>
 						</ListItemText>
 					</ListItem>
 
 				<ListItem button>
 					<ListItemIcon> <InboxIcon /></ListItemIcon>
 					<ListItemText>
-						Create An Events
 					</ListItemText>
 				</ListItem>
 
@@ -116,7 +124,6 @@ const  AppNav = (props) => {
 				</Toolbar>
 			</AppBar>
 			<nav className={classes.drawer} aria-label="mailbox folders">
-				{/* The implementation can be swapped with js to avoid SEO duplication of links. */}
 				<Hidden smUp implementation="css">
 					<Drawer
 						container={container}
@@ -148,18 +155,13 @@ const  AppNav = (props) => {
 			</nav>
 			<main className={classes.content}>
 				<div className={classes.toolbar} />
+				<Container maxWidth="lg">
 				{ props.children }
+				</Container>
 			</main>
 		</div>
 	);
 }
 
-AppNav.propTypes = {
-	/**
-	 * Injected by the documentation to work in an iframe.
-	 * You won't need it on your project.
-	 */
-	window: PropTypes.func,
-};
 
 export default AppNav;

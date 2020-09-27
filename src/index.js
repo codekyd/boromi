@@ -7,18 +7,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
+import {createMuiTheme, MuiThemeProvider} from'@material-ui/core';
 /*
  *  --------------------------------------------------------------------------
  *                             Internal Dependencies
  *  --------------------------------------------------------------------------
  */
 
-import store from "./store/configStore";
+import store from'./store/configStore';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import makeServer from "./server";
+import makeServer from'./server';
 
 // setup theme for the whole application
 const theme = createMuiTheme({
@@ -27,9 +27,12 @@ const theme = createMuiTheme({
     },
     palette: {
         primary: {
-            main: '#764ebe'
+            main:'#1a268f'
 
         },
+        default: {
+            main:'#ffd467'
+        }
     }
 });
 

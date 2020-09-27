@@ -59,14 +59,14 @@ export default  () => {
 			let loanRequest1 = server.create('loanRequest', {
 				user: customer,
 				status: 'pending',
-				paymentChoice: 'weekly',
+				repaymentChoice: 'weekly',
 				dateRequested: dayjs().subtract(5,'day'),
 			});
 			// creates a Loan Request 2
 			let loanRequest2 = 	 server.create('loanRequest', {
 				user: customer,
 				status: 'declined',
-				paymentChoice: 'Daily',
+				repaymentChoice: 'Daily',
 				dateRequested: dayjs().subtract(1,'day'),
 
 			});
@@ -75,14 +75,14 @@ export default  () => {
 			let loanRequest3 = server.create('loanRequest', {
 				user: customer,
 				status: 'pending',
-				paymentChoice: 'Monthly',
+				repaymentChoice: 'Monthly',
 				dateRequested: dayjs().subtract(4,'day'),
 			});
 			// creates a Loan Request 4
 			let loanRequest4 = 	 server.create('loanRequest', {
 				user: customer,
 				status: 'declined',
-				paymentChoice: 'weekly',
+				repaymentChoice: 'weekly',
 				dateRequested: dayjs().subtract(6,'day'),
 
 			});
@@ -90,14 +90,14 @@ export default  () => {
 			let loanRequest5 = server.create('loanRequest', {
 				user: customer,
 				status: 'approved',
-				paymentChoice: 'Monthly',
+				repaymentChoice: 'Monthly',
 				dateRequested: dayjs().subtract(9,'day'),
 			});
 			// creates a Loan Request 6
 			let loanRequest6 = 	 server.create('loanRequest', {
 				user: customer,
 				status: 'pending',
-				paymentChoice: 'weekly',
+				repaymentChoice: 'weekly',
 				dateRequested: dayjs().subtract(11,'day'),
 
 			});
@@ -109,6 +109,7 @@ export default  () => {
 				loanRequests:[loanRequest1, loanRequest2],
 				title: 'Smart Instant',
 				amount: 5000000,
+				description: 'value Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem possimus distinctio ex',
 				interest: 10,
 				maxPayBack: 3,
 			});
@@ -118,6 +119,7 @@ export default  () => {
 				loanRequests:[loanRequest3, loanRequest4],
 				title: 'Small Business',
 				amount: 15000000,
+				description: 'Lofo Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem possimus distinctio ex',
 				interest: 15,
 				maxPayBack: 6,
 			});
@@ -127,6 +129,7 @@ export default  () => {
 				loanRequests:[loanRequest5, loanRequest6],
 				title: 'Medium Enterprise',
 				amount: 50000000,
+				description: 'Suitable Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem possimus distinctio ex',
 				interest: 15,
 				maxPayBack: 6,
 			})
@@ -137,7 +140,6 @@ export default  () => {
 			// check if a user is authenticated
 			this.post('/api/auth', (schema, request) => {
 				let attrs = JSON.parse(request.requestBody);
-				console.log(attrs);
 
 				let user = schema.users.findBy({ token: attrs});
 				if(!user) {
@@ -150,7 +152,7 @@ export default  () => {
 				let attrs = JSON.parse(request.requestBody);
 
 				let user = schema.users.findBy({email: attrs.email})
-				const tokenString = attrs.name.split(' ').join(').toString();
+				const tokenString = attrs.name.split(' ').join('').toString();
 				if(user) {
 					return new Response(400, { some: 'header' },  'User with this email already exist' );
 				}else  {
@@ -199,7 +201,7 @@ export default  () => {
 				let loanID = request.params.id;
 				let attrs = JSON.parse(request.requestBody);
 				let  { title, amount, interest, maxPayBack } = attrs
-				amount = parseFloat(amount.split(',').join('))
+				amount = parseFloat(amount.split(',').join(''))
 				let loan =  schema.loans.find(loanID);
 				 loan.update({title, amount,interest, maxPayBack})
 				return new Response(201, { some: 'header' },  'Loan Updated successfully' );
@@ -218,7 +220,7 @@ export default  () => {
 			this.get('/api/loans/:id/loanRequests', (schema, request) => {
 				const loanID = request.params.id;
 				const loan = schema.loans.find(loanID)
-				return  schema.loan.loanRequests;
+				return  loan.loanRequests;
 
 			})
 			// creates a new loan request
@@ -226,8 +228,25 @@ export default  () => {
 				let attrs = JSON.parse(request.requestBody);
 				let loanID = request.params.id
 				let loan =  schema.loans.find(loanID);
-				return loan.loanRequests.create(attrs);
+				loan.loanRequests.create(attrs);
+				const existingRequest = schema.loans.loanRequests.findBy({title:attrs.title})
+				if(existingRequest){
+					return new Response(400, { some: 'header' },  'This Loan request already exist' );
+				} else {
+					return new Response(201, { some: 'header' },  'Loan request created successfully, an is being reviewed by an Admin' );
+				}
+
 			})
+			//updates a loan request
+			this.patch('/api/loanRequests/:id', (schema, request) => {
+				let attrs = JSON.parse(request.requestBody);
+				let loanRequestID = request.params.id
+				let loanRequest =  schema.loanRequests.find(loanRequestID)
+				loanRequest.update(attrs);
+				console.log(loanRequest.user.attrs);
+				return new Response(200, { some: 'header' },
+				`Loan request by ${loanRequest.user.attrs.name} submitted on ${dayjs(loanRequest.attrs.dateRequested).format('DD/MM/YYYY')} has been updated successfully to ${loanRequest.attrs.status}` )
+				})
 			// deletes a loan request
 			this.delete('/api/loanRequests/:id', (schema, request) => {
 				let id = request.params.id

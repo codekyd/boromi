@@ -1,19 +1,19 @@
 import React from 'react';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import AppNav from '../Drawer/Drawer'
 import LoanForm from '../Loans/LoanForm';
-import { createLoan } from "../../actions/loans"
+import { createLoan } from '../../actions/loans'
 
 const NewLoan = ({ loading, createLoan, error,successMsg }) => {
     return (
         <AppNav>
         <LoanForm
-            header="Create New Loan"
+            header='Create New Loan'
             action={createLoan}
             loading={loading}
             error={error}
             successMsg={successMsg}
-            buttonTitle="create"/>
+            buttonTitle='create'/>
         </AppNav>
     )
 }

@@ -8,7 +8,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import  {Redirect} from "react-router-dom";
 import {Grid, Typography} from "@material-ui/core";
 import { connect } from "react-redux"
-import Alert from '@material-ui/lab/Alert';
+
 /*
  *  --------------------------------------------------------------------------
  *                             Internal Dependencies
@@ -21,15 +21,15 @@ import {validateEmail} from "../../utils/helpers";
 import { loginUser} from "../../actions/auth";
 import Loader from "../Loader/Loader";
 import PropTypes from "prop-types";
+import Alerts from "../Alerts/Alerts";
 
 const useStyles =  makeStyles({
-
     root: {
         textAlign: 'right'
     },
 })
 
-const Login = ({ isAuthenticated, loading, errors, isAdmin, loginUser}) => {
+const Login = ({ isAuthenticated, loading, error, isAdmin, loginUser}) => {
 
     const [loginData, setLoginData] = useState({
         email: '',
@@ -72,7 +72,7 @@ const Login = ({ isAuthenticated, loading, errors, isAdmin, loginUser}) => {
             <Typography variant="h6" align="center" display="block" gutterBottom>
                 Welcome, Login
             </Typography>
-            {errors && <Alert severity="error">{errors}!</Alert>}
+            <Alerts error={error}/>
 
             <form noValidate autoComplete="off" onSubmit={onSubmit}>
                 <TextInput
@@ -138,7 +138,7 @@ const mapStateToProps = state => ({
     loading: state.auth.loading,
     isAuthenticated: state.auth.isAuthenticated,
     isAdmin: state.auth.user ? state.auth.user.isAdmin : false,
-    errors: state.auth.errors
+    error: state.auth.error
 
 })
 export default connect(mapStateToProps, {loginUser})(Login)

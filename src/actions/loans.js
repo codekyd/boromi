@@ -27,18 +27,17 @@ export const createLoan = ({title,amount,interest, maxPayBack}) => async dispatc
 }
 //Action to get All Loans
 export const getAllLoans = () => async dispatch => {
-    console.log("Here...............");
     dispatch({ type: types.GET_ALL_LOANS_REQUEST })
     try {
         const res = await axios.get("/api/loans")
         console.log(res.data);
         dispatch({
             type: types.GET_ALL_LOANS_SUCCESS,
-            payload: res.data
+            payload: res.data.loans
         })
     } catch (err) {
         dispatch({
-            type: types.GET_ALL_LOANS_SUCCESS,
+            type: types.GET_ALL_LOANS_FAILURE,
             payload: err.response.data
         })
     }
@@ -50,7 +49,7 @@ export const getLoanByID = (loanID) => async dispatch => {
         const res = await axios.get(`/api/loans/${loanID}`)
         dispatch({
             type: types.GET_LOAN_BY_ID_SUCCESS,
-            payload: res.data
+            payload: res.data.loan
         })
     } catch (err) {
         dispatch({

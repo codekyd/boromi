@@ -3,17 +3,20 @@
  *                             External Dependencies
  *  --------------------------------------------------------------------------
  */
-import { combineReducers} from "redux";
+import { combineReducers} from 'redux';
 
 /*
  *  --------------------------------------------------------------------------
  *                             Internal Dependencies
  *  --------------------------------------------------------------------------
  */
-import auth from "./auth";
-import loans from "./loan"
+import auth from './auth';
+import loans from './loan'
+import loanRequests from './loanRequest'
+
 
 export default combineReducers({
 	auth,
-	loans
+	loans,
+	loanRequests
 })

@@ -21,7 +21,7 @@ const  AllLoans = ( {allLoans, getAllLoans, loading}) => {
 			{/* checks if there are loans and display them */}
 		{	loading ? <Loader/> :
 		<LoansLayout title="All Loans">
-			{ allLoans && !loading && allLoans.loans.map((loan) =><LoanItem key={loan.id} {...loan}/>)}
+			{ allLoans && !loading && allLoans.map((loan) =><LoanItem key={loan.id} {...loan}/>)}
 		</LoansLayout>
 		}
 		</AppNav>
@@ -33,7 +33,7 @@ const mapStateToProps = state => ({
 });
 AllLoans.propTypes = {
 	loading: PropTypes.bool.isRequired,
-	allLoans: PropTypes.object.isRequired,
+	allLoans: PropTypes.array.isRequired,
 	getAllLoans: PropTypes.func.isRequired
 }
 export default  connect(mapStateToProps, {getAllLoans})(AllLoans);

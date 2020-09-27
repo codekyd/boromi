@@ -4,6 +4,6 @@ import App from '../App';
 import AppRouter from "../routers/AppRouter";
 
 test('renders The App Component without errors', () => {
-  const { container, getByText } =   render(<App />);
-  expect(getByText("Hi")).toBeInTheDocument()
+  const { getByText } =   render(<App />);
+  expect(getByText("Get Access To Instant Fast Loans With Low Interest Rate.")).toBeInTheDocument()
 });
