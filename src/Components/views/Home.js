@@ -4,10 +4,17 @@
  *  --------------------------------------------------------------------------
  */
 import React from "react";
-import { Typography, Box, Container, makeStyles, Grid, Card, CardContent, Icon } from "@material-ui/core"
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import SpellcheckOutlinedIcon from '@material-ui/icons/SpellcheckOutlined';
 import MoneyOutlinedIcon from '@material-ui/icons/MoneyOutlined';
+import {makeStyles} from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import Icon from "@material-ui/core/Icon";
 /*
  *  --------------------------------------------------------------------------
  *                             Internal Dependencies
@@ -16,6 +23,9 @@ import MoneyOutlinedIcon from '@material-ui/icons/MoneyOutlined';
 
 import Layout from "../Layout/Layout";
 import { SecondaryButton } from "../Buttons/Buttons";
+
+
+
 
 const styles = makeStyles({
 	root: {

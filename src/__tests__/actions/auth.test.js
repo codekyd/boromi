@@ -20,7 +20,7 @@ describe("Dispatches All Auth actions", () => {
     it("Dispatches a USER_LOADED_SUCCESS action when fetching User has been done",  async () => {
         const store = mockStore({ });
         const token = "JohnDoeToken";
-        mockRequest.onPost("/api/auth",token).replyOnce(200, authResponse.data)
+        mockRequest.onPost("/api/auth",token).replyOnce(200, authResponse.data);
         const expectedAction = [
             {type: types.USER_LOADED_REQUEST},
             {type: types.USER_LOADED_SUCCESS, payload: authResponse.data}

@@ -15,10 +15,6 @@ const Loans = ({ user, loading, loanRequests, getLoanRequestsByUserID}) => {
 		}
 
 	},[getLoanRequestsByUserID, user])
-	let userLoanRequests = null;
-	if(loanRequests) {
-		userLoanRequests = loanRequests.filter((loanRequest) => loanRequest.status === 'approved')
-	}
 	return(
 
 		<AppNav>

@@ -39,7 +39,7 @@ const LoanRequestForm = ({ loading, user, successMsg, error, allLoans, getAllLoa
 	useEffect(() => {
 		getAllLoans()
 
-	}, [])
+	}, [getAllLoans])
 	const initialState = {
 		status: 'pending',
 		repaymentChoice: 'Daily',
@@ -49,7 +49,6 @@ const LoanRequestForm = ({ loading, user, successMsg, error, allLoans, getAllLoa
 
 	}
 	const [requestData, setLoanData] = useState(initialState);
-	const [requestErr, setRequestErr] = useState({});
 
 	const handleInputChange = (e) => {
 		let { name, value } = e.target;
@@ -64,17 +63,6 @@ const LoanRequestForm = ({ loading, user, successMsg, error, allLoans, getAllLoa
 
 	}
 	const { status,dateRequested, repaymentChoice, loan, loanInfo } = requestData;
-
-	// validates the inputs before sending an action
-	const validateData = () => {
-		let errors = { }
-		errors.repaymentChoiceErr = repaymentChoice ? "" : "Please Select a repayment plan"
-
-		setRequestErr({
-			...errors
-		})
-		return Object.values(errors).every(x => x === "")
-	}
 	const onSubmit = (e) => {
 		// sends a new  loan request
 		e.preventDefault()

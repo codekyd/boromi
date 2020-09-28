@@ -26,6 +26,7 @@ export default  () => {
 				include: ['loans','loanRequests'],
 				embed: true,
 				alwaysIncludeLinkageData: true,
+				root: false
 			}),
 		},
 		// models

@@ -42,15 +42,6 @@ const useStyles = makeStyles({
 
 
 const RequestTable = ({ title, loanRequests,updateLoanRequestByID, successMsg, error, isAdmin }) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   const handleRequestAction = (id,status) => {
 		updateLoanRequestByID(id,{status})
     console.log(id)

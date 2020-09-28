@@ -22,7 +22,7 @@ export  const loadUser = (token) =>   async dispatch => {
 			);
 			dispatch({
 				type: USER_LOADED_SUCCESS,
-				payload: res.data.user
+				payload: res.data
 			});
 		} catch (err) {
 			dispatch({
@@ -46,7 +46,7 @@ export const loginUser = ({ email, password}) => async dispatch => {
 		});
 		dispatch({
 			type: LOGIN_SUCCESS,
-			payload: res.data.user
+			payload: res.data
 		});
 	} catch (err) {
 		dispatch({
@@ -69,7 +69,7 @@ export const registerUser = ({ name, email, password, isAdmin}) => async dispatc
 		});
 		dispatch({
 			type: REGISTER_SUCCESS,
-			payload: res.data.user
+			payload: res.data
 		});
 	} catch (err) {
 		dispatch({

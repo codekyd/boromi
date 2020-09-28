@@ -4,11 +4,9 @@
  *  --------------------------------------------------------------------------
  */
 import React, {useState} from 'react';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Typography, Grid } from "@material-ui/core";
 import PropTypes from "prop-types"
 import {connect} from "react-redux";
-import Alert from "@material-ui/lab/Alert";
 import {Redirect} from "react-router-dom";
 /*
  *  --------------------------------------------------------------------------
@@ -23,40 +21,6 @@ import {registerUser} from "../../actions/auth";
 import Loader from "../Loader/Loader";
 import Alerts from "../Alerts/Alerts";
 
-
-const useStyles = makeStyles((theme) =>
-    createStyles({
-        root: {
-            width: '100%',
-
-        },
-        stepper: {
-            background: 'transparent'
-        },
-        choiceCard: {
-            padding: '10px',
-            margin: '5px',
-            borderRadius: 6,
-            background: 'rgba(255,255,255,0.8)',
-            boxShadow: 'none'
-
-        },
-
-        button: {
-            marginTop: theme.spacing(1),
-            marginRight: theme.spacing(1),
-        },
-        actionsContainer: {
-            marginBottom: theme.spacing(2),
-        },
-        resetContainer: {
-            padding: theme.spacing(3),
-            margin: '5px',
-            borderRadius: 6,
-            background: 'rgba(255,255,255,0.8)',
-        },
-    }),
-);
 const  SignUp = ({loading, isAuthenticated, registerUser, error}) => {
     const [signupData, setSignupData] = useState({
         name: "",

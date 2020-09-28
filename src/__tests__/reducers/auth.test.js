@@ -8,12 +8,12 @@ describe("Performs Auth Reducers", () => {
         token:localStorage.getItem("token") || null,
         user: null,
         loading: false,
-        errors: null,
+        error: null,
         isAuthenticated: false
 
     }
     const { authResponse } = userData;
-    const errMsg = "Some Auth Occured Here";
+    const errMsg = "Some Auth Occurred Here";
     const successState = {
         ...state,
         isAuthenticated: true,
@@ -27,7 +27,7 @@ describe("Performs Auth Reducers", () => {
         user: null,
         token: null,
         isAuthenticated: false,
-        errors: errMsg
+        error: errMsg
     }
     it("should return the initial state", () => {
         expect(reducer(undefined, {})).toEqual(state)

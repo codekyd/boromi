@@ -39,13 +39,12 @@ makeServer();
 
 ReactDOM.render(
 
-      <>
-          <MuiThemeProvider theme={theme}>
-              <Provider store={store}>
-                  <App />
-              </Provider>
-          </MuiThemeProvider>
-      </>,
+      <MuiThemeProvider theme={theme}>
+          <Provider store={store}>
+              <App />
+          </Provider>
+
+      </MuiThemeProvider>,
   document.getElementById('root')
 );
 

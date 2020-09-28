@@ -2,7 +2,6 @@ import React, {useEffect} from "react";
 import { connect} from "react-redux";
 import AppNav from "../../Drawer/Drawer";
 import Loader from "../../Loader/Loader";
-import LoanItem from "../../Loans/LoanItem";
 import PropTypes from 'prop-types'
 import {getAllLoanRequest} from "../../../actions/loanRequest";
 import RequestLayout from "../../LoanRequests/RequestLayout";
