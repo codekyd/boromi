@@ -13,6 +13,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import RequestAction from './RequestActions';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
 import { formatMoney } from '../../utils/helpers';
 
 const useStyles = makeStyles({
@@ -33,7 +34,7 @@ const useStyles = makeStyles({
   }
 });
 
-const RequestTable = ({ title,loading, loanRequests }) => {
+const RequestTable = ({ title,loading, loanRequests, isAdmin }) => {
   const classes = useStyles();
   const handleUpdateRequest = (id, status) => {
 
@@ -55,7 +56,7 @@ const RequestTable = ({ title,loading, loanRequests }) => {
                       <TableCell align="right">Loan</TableCell>
                       <TableCell align="right">Loan Amount</TableCell>
                       <TableCell align="right">Status</TableCell>
-                      <TableCell align="right">Action</TableCell>
+                     { isAdmin && <TableCell align="right">Action</TableCell>}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -71,13 +72,14 @@ const RequestTable = ({ title,loading, loanRequests }) => {
                           <TableCell align="right">
                               <Chip label={loanRequest.status} className={classes[loanRequest.status]} />
                           </TableCell>
-                          <TableCell align="right">
+                          {/* only render Action button if the user is an admin */}
+                         { isAdmin &&  <TableCell align="right">
                                   <RequestAction
                                       loanRequestStatus={loanRequest.status}
                                       action={handleUpdateRequest}
                                       id={loanRequest.id}
                                   />
-                          </TableCell>
+                          </TableCell> }
                       </TableRow>
                     ))}
                   </TableBody>
@@ -92,5 +94,7 @@ RequestTable.propTypes = {
   loading: PropTypes.bool.isRequired,
   loanRequests: PropTypes.array.isRequired
 }
-
-export default RequestTable
+const mapStateToProps = state => ({
+  isAdmin : state.auth.user? state.auth.user.isAdmin : false
+})
+export default connect(mapStateToProps, null)(RequestTable)

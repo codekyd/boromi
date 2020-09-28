@@ -3,13 +3,15 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from '../Components/views/Home';
 import Login from '../Components/Auth/Login';
 import SignUp from '../Components/Auth/SignUp';
-import PrivateRoute from './PrivateRoute';
-import Dashboard from '../Components/views/Dashboard';
-import AdminDashboard from '../Components/views/AdminDashboard';
-import SingleLoan from '../Components/views/SingleLoan';
-import AllLoans from '../Components/views/AllLoans';
-import NewLoan from '../Components/views/NewLoan';
-import EditLoan from '../Components/views/EditLoan';
+import AdminRoute from './AdminRoute';
+import UserRoute from './UserRoute';
+import Dashboard from '../Components/views/user/Dashboard';
+import AdminDashboard from '../Components/views/admin/AdminDashboard';
+import SingleLoan from '../Components/views/admin/SingleLoan';
+import AllLoans from '../Components/views/admin/AllLoans';
+import NewLoan from '../Components/views/admin/NewLoan';
+import EditLoan from '../Components/views/admin/EditLoan';
+import NewLoanRequest from "../Components/views/user/NewLoanRequest";
 
 
 const AppRouter = () => {
@@ -19,12 +21,13 @@ const AppRouter = () => {
 				<Route path='/' component={Home} exact/>
 				<Route path='/login' component={Login}/>
 				<Route path='/signup' component={SignUp}/>
-				<PrivateRoute path='/dashboard' component={Dashboard}/>
-				<Route path='/admin-dashboard' component={AdminDashboard}/>
-				<Route path='/loans'  exact component={AllLoans}/>
-				<Route path='/loans/new' component={NewLoan}/>
-				<Route path='/loans/update/:id' component={EditLoan}/>
-				<Route path='/loans/:id' component={SingleLoan}/>
+				<AdminRoute path='/admin'  component={AdminDashboard} exact/>
+				<AdminRoute path='/admin/loans'  exact component={AllLoans}/>
+				<AdminRoute path='/admin/loans/new' component={NewLoan}/>
+				<AdminRoute path='/admin/loans/update/:id' component={EditLoan}/>
+				<AdminRoute path='/admin/loans/:id' component={SingleLoan}/>
+				<UserRoute path='/dashboard' component={Dashboard}/>
+				<UserRoute path='/loan-requests/new' component={NewLoanRequest}/>
 			</Switch>
 		</Router>
 	)

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import AppNav from '../Drawer/Drawer'
-import LoanForm from '../Loans/LoanForm';
-import { getLoanByID, updateLoanByID } from '../../actions/loans'
+import AppNav from '../../Drawer/Drawer'
+import LoanForm from '../../Loans/LoanForm';
+import { getLoanByID, updateLoanByID } from '../../../actions/loans'
 
 const EditLoan = ({match, loading, error, getLoanByID, updateLoanByID, singleLoan, successMsg }) => {
     const singleLoanID = match.params.id;

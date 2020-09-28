@@ -5,6 +5,7 @@ import relativeTime from "dayjs/plugin/relativeTime"
 import PropTypes from "prop-types";
 import { formatMoney } from '../../utils/helpers';
 import { ButtonLink } from '../Buttons/Buttons';
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles({
   root: {
@@ -16,12 +17,11 @@ const useStyles = makeStyles({
 }
 });
 
- const LoanItem =({ title, amount, interest,maxPayBack, id }) => {
+ const LoanItem =({ title, amount, interest,maxPayBack, id, isAdmin }) => {
   const classes = useStyles();
   dayjs.extend(relativeTime)
  let chosenDay = dayjs().month((maxPayBack) -1).format("M");
  let expectedDay = dayjs().add(chosenDay, "M");
- console.log(expectedDay);
   return (
     <Grid item md={5}>
         <Card className={classes.root}>
@@ -42,18 +42,24 @@ const useStyles = makeStyles({
                     }
                   </Typography>
             </CardContent>
+            { isAdmin &&
             <CardActions className={classes.cardActions}>
-              <ButtonLink linkTo={`/loans/${id}`} content="View Loan"/>
-              <ButtonLink linkTo={`/loans/${id}/requests`} content="View Loan Requests"/>
+                  <ButtonLink linkTo={`/admin/loans/${id}`} content="View Loan"/>
+                  <ButtonLink linkTo={`/admin/loans/${id}`} content="View Loan Requests"/>
             </CardActions>
+            }
         </Card>
     </Grid>
   );
 }
+const mapStateToProps = state => ({
+  isAdmin: state.auth.user? state.auth.user.isAdmin : false
+})
 LoanItem.propTypes = {
   title: PropTypes.string.isRequired,
   amount: PropTypes.number.isRequired,
   interest: PropTypes.number.isRequired,
-  maxPayBack: PropTypes.string.isRequired
+  maxPayBack: PropTypes.number.isRequired,
+  isAdmin: PropTypes.bool.isRequired
 }
-export default LoanItem
+export default connect(mapStateToProps, null)(LoanItem)

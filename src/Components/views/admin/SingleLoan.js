@@ -5,17 +5,17 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
 import PropTypes from 'prop-types'
-import AppNav from '../Drawer/Drawer'
-import { getLoanByID, deleteLoanByID } from '../../actions/loans'
-import LoansLayout from '../Loans/LoansLayout'
-import Loader from '../Loader/Loader'
-import { formatMoney } from '../../utils/helpers'
-import { ButtonLink } from '../Buttons/Buttons';
+import AppNav from '../../Drawer/Drawer'
+import { getLoanByID, deleteLoanByID } from '../../../actions/loans'
+import LoansLayout from '../../Loans/LoansLayout'
+import Loader from '../../Loader/Loader'
+import { formatMoney } from '../../../utils/helpers'
+import { ButtonLink } from '../../Buttons/Buttons';
 import { Link } from 'react-router-dom';
 
-import { getLoanRequestsByLoanID } from '../../actions/loanRequest'
-import RequestTable from '../LoanRequests/RequestTable';
-import RequestLayout from '../LoanRequests/RequestLayout';
+import { getLoanRequestsByLoanID } from '../../../actions/loanRequest'
+import RequestTable from '../../LoanRequests/RequestTable';
+import RequestLayout from '../../LoanRequests/RequestLayout';
 
 const useStyles = makeStyles({
     root: {

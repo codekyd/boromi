@@ -2,6 +2,7 @@ import {
 	LOGIN_FAILURE,
 	LOGIN_REQUEST,
 	LOGIN_SUCCESS,
+	LOGOUT,
 	REGISTER_FAILURE,
 	REGISTER_REQUEST,
 	REGISTER_SUCCESS, USER_LOADED_FAILURE, USER_LOADED_REQUEST, USER_LOADED_SUCCESS
@@ -45,7 +46,7 @@ export const loginUser = ({ email, password}) => async dispatch => {
 		});
 		dispatch({
 			type: LOGIN_SUCCESS,
-			payload: res.data
+			payload: res.data.user
 		});
 	} catch (err) {
 		dispatch({
@@ -76,4 +77,9 @@ export const registerUser = ({ name, email, password, isAdmin}) => async dispatc
 			payload: err.response.data
 		});
 	}
+}
+
+// logout
+export const logout = () => dispatch => {
+    dispatch({type: LOGOUT})
 }

@@ -60,7 +60,7 @@ const Login = ({ isAuthenticated, loading, error, isAdmin, loginUser}) => {
     const classes = useStyles()
     if(isAuthenticated  && isAdmin && !loading) {
 
-        return <Redirect  to="/admin-dashboard" />
+        return <Redirect  to="/admin" />
 
     }
     if(isAuthenticated && !loading) {

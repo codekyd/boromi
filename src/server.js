@@ -5,6 +5,8 @@
  */
 import { createServer, RestSerializer, Model, hasMany, belongsTo, Response} from 'miragejs';
 import dayjs from  'dayjs'
+import loan from './reducers/loan';
+import loanRequest from './reducers/loanRequest';
 
 export default  () => {
 	createServer({
@@ -17,6 +19,11 @@ export default  () => {
 			}),
 			loanRequests: RestSerializer.extend({
 				include: ['loan','user'],
+				embed: true,
+				alwaysIncludeLinkageData: true,
+			}),
+			user: RestSerializer.extend({
+				include: ['loans','loanRequests'],
 				embed: true,
 				alwaysIncludeLinkageData: true,
 			}),
@@ -143,7 +150,8 @@ export default  () => {
 
 				let user = schema.users.findBy({ token: attrs});
 				if(!user) {
-					return new Response(401, { some: 'header' }, 'Token Not found' );
+					return new Response(401, { some: 'header' },
+						'Token Not found' );
 				}
 				return user;
 			})
@@ -154,7 +162,8 @@ export default  () => {
 				let user = schema.users.findBy({email: attrs.email})
 				const tokenString = attrs.name.split(' ').join('').toString();
 				if(user) {
-					return new Response(400, { some: 'header' },  'User with this email already exist' );
+					return new Response(400, { some: 'header' },
+						'User with this email already exist' );
 				}else  {
 					return schema.users.create({...attrs, token : `${tokenString}Token`})
 				}
@@ -166,7 +175,8 @@ export default  () => {
 
 				const user = schema.users.findBy({ email: attrs.email, password: attrs.password})
 				if(!user) {
-					return new Response(404, { some: 'header' },  'User not found' );
+					return new Response(404, { some: 'header' },
+						'User not found' );
 				}
 				return user
 			})
@@ -181,10 +191,12 @@ export default  () => {
 				let attrs = JSON.parse(request.requestBody);
 				const loan = schema.loans.findBy({title:attrs.title})
 				if(loan){
-					return new Response(400, { some: 'header' },  'Loan with this title already exist' );
+					return new Response(400, { some: 'header' },
+						'Loan with this title already exist' );
 				}
 				schema.loans.create(attrs)
-				 return new Response(201, { some: 'header' },  'New Loan Created successfully' );
+				 return new Response(201, { some: 'header' },
+					 'New Loan Created successfully' );
 
 			})
 			// gets a single loan
@@ -221,19 +233,26 @@ export default  () => {
 				const loanID = request.params.id;
 				const loan = schema.loans.find(loanID)
 				return  loan.loanRequests;
-
 			})
+			//  Get Loan Requests of a specific User
+			this.get('/api/users/:id/loanRequests', (schema, request) => {
+				const userID = request.params.id;
+				const loanRequests = schema.loanRequests.all();
+				return loanRequests.filter((loanRequest) => loanRequest.user.id === userID)
+			})
+
 			// creates a new loan request
-			this.post('/api/loans/:id/loanRequests', (schema, request) => {
+			this.post('/api/loanRequests', (schema, request) => {
 				let attrs = JSON.parse(request.requestBody);
 				let loanID = request.params.id
-				let loan =  schema.loans.find(loanID);
-				loan.loanRequests.create(attrs);
-				const existingRequest = schema.loans.loanRequests.findBy({title:attrs.title})
+				const existingRequest = schema.loanRequests.find({title:attrs.title})
 				if(existingRequest){
-					return new Response(400, { some: 'header' },  'This Loan request already exist' );
+					return new Response(400, { some: 'header' },
+						'This Loan request already exist' );
 				} else {
-					return new Response(201, { some: 'header' },  'Loan request created successfully, an is being reviewed by an Admin' );
+					schema.loanRequests.create(attrs)
+					return new Response(201, { some: 'header' },
+						'Loan request created successfully, and is being reviewed by an Admin' );
 				}
 
 			})
@@ -245,7 +264,9 @@ export default  () => {
 				loanRequest.update(attrs);
 				console.log(loanRequest.user.attrs);
 				return new Response(200, { some: 'header' },
-				`Loan request by ${loanRequest.user.attrs.name} submitted on ${dayjs(loanRequest.attrs.dateRequested).format('DD/MM/YYYY')} has been updated successfully to ${loanRequest.attrs.status}` )
+				`Loan request by ${loanRequest.user.attrs.name} submitted on
+				 ${dayjs(loanRequest.attrs.dateRequested).format('DD/MM/YYYY')} has been updated 
+				 successfully to ${loanRequest.attrs.status}` )
 				})
 			// deletes a loan request
 			this.delete('/api/loanRequests/:id', (schema, request) => {

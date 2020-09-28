@@ -19,7 +19,6 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import makeServer from'./server';
-
 // setup theme for the whole application
 const theme = createMuiTheme({
     typography: {
@@ -39,14 +38,14 @@ const theme = createMuiTheme({
 makeServer();
 
 ReactDOM.render(
-  <React.StrictMode>
-      <MuiThemeProvider theme={theme}>
-          <Provider store={store}>
-              <App />
-          </Provider>
 
-      </MuiThemeProvider>
-  </React.StrictMode>,
+      <>
+          <MuiThemeProvider theme={theme}>
+              <Provider store={store}>
+                  <App />
+              </Provider>
+          </MuiThemeProvider>
+      </>,
   document.getElementById('root')
 );
 

@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import AppNav from '../Drawer/Drawer';
+import AppNav from '../../Drawer/Drawer';
 import { connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { getAllLoans } from '../../actions/loans'
-import { getAllLoanRequest } from '../../actions/loanRequest'
-import LoansLayout from '../Loans/LoansLayout'
-import LoanItem from '../Loans/LoanItem';
-import Loader from '../Loader/Loader'
-import RequestTable from '../LoanRequests/RequestTable';
-import RequestLayout from '../LoanRequests/RequestLayout';
+import { getAllLoans } from '../../../actions/loans'
+import { getAllLoanRequest } from '../../../actions/loanRequest'
+import LoansLayout from '../../Loans/LoansLayout'
+import LoanItem from '../../Loans/LoanItem';
+import Loader from '../../Loader/Loader'
+import RequestTable from '../../LoanRequests/RequestTable';
+import RequestLayout from '../../LoanRequests/RequestLayout';
 
 
 const  AdminDashboard = ( {allLoans, getAllLoans, getAllLoanRequest, loanIsLoading, loanRequestIsLoading, allLoanRequests, successMsg}) => {

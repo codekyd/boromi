@@ -3,6 +3,8 @@
 
 // convert a string to link
 
+import dayjs from "dayjs";
+
 export const linkfyString = (string) => string.trim().split(' ').join('-').toLocaleLowerCase();
 
 
@@ -38,7 +40,9 @@ export const formatMoney = (naira) => {
     });
   }
 
-//   export const toNumber = (value) => {
-//     if (typeof value === 'number') return value
-//     return parseInt(value.replace(/[^\d]+/g, ''))
-// }
+export const expectedDuration =(maxPayBack) => {
+    let chosenDay = dayjs().month((maxPayBack) -1).format("M");
+    let expectedDay = dayjs().add(chosenDay, "M");
+    return expectedDay
+
+}

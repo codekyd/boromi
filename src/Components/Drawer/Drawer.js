@@ -17,7 +17,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
+import { connect } from 'react-redux';
 import { ButtonLink } from '../Buttons/Buttons';
+import { logout } from '../../actions/auth';
+import { useHistory } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -54,8 +57,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const  AppNav = (props) => {
-	const { window } = props;
+const  AppNav = ({ window, children, logout, user }) => {
+	let history = useHistory();
 	const classes = useStyles();
 	const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -63,43 +66,47 @@ const  AppNav = (props) => {
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
 	};
-
+	const handleLogOut = () => {
+		logout();
+		history.push('/login')
+	}
+	// choose links based on the current user authenticated
+	const userLinks = [
+		{ path:'/dashboard', content: 'Dashboard' },
+		{ path:'/loans', content:'My Loans' },
+		{ path:'/loan-requests', content:'My Loan Requests' },
+	];
+	const adminLinks = [
+		{ path:'/admin', content: 'DashBoard' },
+		{ path:'/admin/loans', content:'All Loans' },
+		{ path:'/admin/loan-requests', content:'All Loan Requests' }
+	]
+	let dashBoardLinks = user.isAdmin ? adminLinks : userLinks
 	const drawer = (
 		<div>
 			<div className={classes.toolbar} />
 			<Divider />
-			<List>
-				<ListItem button>
-					<ListItemIcon> <InboxIcon /></ListItemIcon>
-					<ListItemText>
-						<ButtonLink linkTo="/admin-dashboard" content="Dashboard"/>
-					</ListItemText>
-				</ListItem>
-
-					<ListItem button>
-						<ListItemIcon> <InboxIcon /></ListItemIcon>
-						<ListItemText>
-							<ButtonLink linkTo="/loans" content="All Loans"/>
-						</ListItemText>
-					</ListItem>
-
-				<ListItem button>
-					<ListItemIcon> <InboxIcon /></ListItemIcon>
-					<ListItemText>
-					</ListItemText>
-				</ListItem>
-
-			</List>
-
+			{ dashBoardLinks.map((link) => (
+							<List>
+							<ListItem button>
+								<ListItemText >
+									<ButtonLink
+										linkTo={link.path}
+										content={link.content}
+										/>
+								</ListItemText>
+							</ListItem>
+						</List>
+			)) }
 			<Divider />
 			<List>
 				<ListItem button>
-					<ListItemIcon> <InboxIcon /></ListItemIcon>
-					<ListItemText>
+					<ListItemText onClick={handleLogOut}>
 						Log Out
 					</ListItemText>
 				</ListItem>
 			</List>
+
 		</div>
 	);
 
@@ -107,27 +114,27 @@ const  AppNav = (props) => {
 	return (
 		<div className={classes.root}>
 			<CssBaseline />
-			<AppBar position="fixed" className={classes.appBar}>
+			<AppBar position='fixed' className={classes.appBar}>
 				<Toolbar>
 					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						edge="start"
+						color='inherit'
+						aria-label='open drawer'
+						edge='start'
 						onClick={handleDrawerToggle}
 						className={classes.menuButton}
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography variant="h6" noWrap>
-						Hi, Admin
+					<Typography variant='h6' noWrap>
+						Hi, {user.name}
 					</Typography>
 				</Toolbar>
 			</AppBar>
-			<nav className={classes.drawer} aria-label="mailbox folders">
-				<Hidden smUp implementation="css">
+			<nav className={classes.drawer} aria-label='mailbox folders'>
+				<Hidden smUp implementation='css'>
 					<Drawer
 						container={container}
-						variant="temporary"
+						variant='temporary'
 						anchor={theme.direction === 'rtl' ? 'right' : 'left'}
 						open={mobileOpen}
 						onClose={handleDrawerToggle}
@@ -141,12 +148,12 @@ const  AppNav = (props) => {
 						{drawer}
 					</Drawer>
 				</Hidden>
-				<Hidden xsDown implementation="css">
+				<Hidden xsDown implementation='css'>
 					<Drawer
 						classes={{
 							paper: classes.drawerPaper,
 						}}
-						variant="permanent"
+						variant='permanent'
 						open
 					>
 						{drawer}
@@ -155,13 +162,15 @@ const  AppNav = (props) => {
 			</nav>
 			<main className={classes.content}>
 				<div className={classes.toolbar} />
-				<Container maxWidth="lg">
-				{ props.children }
+				<Container maxWidth='lg'>
+				{ children }
 				</Container>
 			</main>
 		</div>
 	);
 }
 
-
-export default AppNav;
+const mapStateToProps = state => ({
+	user: state.auth.user
+})
+export default connect(mapStateToProps, { logout })(AppNav);

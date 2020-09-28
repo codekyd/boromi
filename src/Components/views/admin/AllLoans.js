@@ -1,13 +1,13 @@
 import React, {useEffect} from "react";
-import AppNav from "../Drawer/Drawer";
+import AppNav from "../../Drawer/Drawer";
 import { connect} from "react-redux";
 import {Typography} from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import PropTypes from "prop-types";
-import { getAllLoans } from "../../actions/loans"
-import LoansLayout from "../Loans/LoansLayout"
-import LoanItem from "../Loans/LoanItem";
-import Loader from "../Loader/Loader"
+import { getAllLoans } from "../../../actions/loans"
+import LoansLayout from "../../Loans/LoansLayout"
+import LoanItem from "../../Loans/LoanItem";
+import Loader from "../../Loader/Loader"
 
 
 const  AllLoans = ( {allLoans, getAllLoans, loading}) => {

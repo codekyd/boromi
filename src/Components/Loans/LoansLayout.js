@@ -4,7 +4,7 @@ import { Grid, Typography } from "@material-ui/core"
 const LoansLayout = ({ children, title }) => {
     return (
         <>
-             <Typography variant="h6">
+             <Typography variant="h6" gutterBottom>
                  {title}
             </Typography>
             <Grid container spacing={5}>

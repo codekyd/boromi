@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import AppNav from '../Drawer/Drawer'
-import LoanForm from '../Loans/LoanForm';
-import { createLoan } from '../../actions/loans'
+import AppNav from '../../Drawer/Drawer'
+import LoanForm from '../../Loans/LoanForm';
+import { createLoan } from '../../../actions/loans'
 
 const NewLoan = ({ loading, createLoan, error,successMsg }) => {
     return (

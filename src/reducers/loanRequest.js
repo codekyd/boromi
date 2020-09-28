@@ -7,6 +7,9 @@ import {
     GET_LOAN_REQ_OF_LOAN_BY_ID_FAILURE,
     GET_LOAN_REQ_OF_LOAN_BY_ID_REQUEST,
     GET_LOAN_REQ_OF_LOAN_BY_ID_SUCCESS,
+    GET_LOAN_REQ_OF_USER_BY_ID_FAILURE,
+    GET_LOAN_REQ_OF_USER_BY_ID_REQUEST,
+    GET_LOAN_REQ_OF_USER_BY_ID_SUCCESS,
     UPDATE_LOAN_REQ_BY_ID_FAILURE,
     UPDATE_LOAN_REQ_BY_ID_REQUEST,
     UPDATE_LOAN_REQ_BY_ID_SUCCESS
@@ -25,6 +28,7 @@ export default (state = initialState, action) => {
         case GET_ALL_LOAN_REQ_REQUEST:
         case GET_LOAN_REQ_OF_LOAN_BY_ID_REQUEST:
         case UPDATE_LOAN_REQ_BY_ID_REQUEST:
+        case GET_LOAN_REQ_OF_USER_BY_ID_REQUEST:
             return {
                 ...state,
                 loading: true
@@ -46,6 +50,7 @@ export default (state = initialState, action) => {
                 error: ''
             }
             case GET_LOAN_REQ_OF_LOAN_BY_ID_SUCCESS:
+            case GET_LOAN_REQ_OF_USER_BY_ID_SUCCESS:
                 return {
                     ...state,
                     loading: false,
@@ -57,11 +62,13 @@ export default (state = initialState, action) => {
                     ...state,
                     loading: false,
                     singleLoanRequest: null,
-                    successMsg: payload,
+                    allLoanRequests: state.allLoanRequests.map((loanRequest) => loanRequest.id === 1 ? loanRequest.status = "Modified" : state.allLoanRequests),
+                    successMsg: payload.msg,
                     error: ''
                 }
             case GET_ALL_LOAN_REQ_FAILURE:
             case GET_LOAN_REQ_OF_LOAN_BY_ID_FAILURE:
+            case GET_LOAN_REQ_OF_USER_BY_ID_FAILURE:
             case CREATE_LOAN_REQ_FAILURE:
             case UPDATE_LOAN_REQ_BY_ID_FAILURE:
                 return {
