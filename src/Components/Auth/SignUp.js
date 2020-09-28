@@ -21,6 +21,7 @@ import {validateEmail, validatePassword} from "../../utils/helpers";
 import {ButtonLink, PrimaryButton} from "../Buttons/Buttons";
 import {registerUser} from "../../actions/auth";
 import Loader from "../Loader/Loader";
+import Alerts from "../Alerts/Alerts";
 
 
 const useStyles = makeStyles((theme) =>
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme) =>
         },
     }),
 );
-const  SignUp = ({loading, isAuthenticated, registerUser, errors}) => {
+const  SignUp = ({loading, isAuthenticated, registerUser, error}) => {
     const [signupData, setSignupData] = useState({
         name: "",
         email: "",
@@ -102,7 +103,7 @@ const  SignUp = ({loading, isAuthenticated, registerUser, errors}) => {
                 Welcome, Create Your Account
             </Typography>
             {loading && <Loader/>}
-            {errors && <Alert severity="error">{errors}!</Alert>}
+            { error && <Alerts error={error}/>}
             <form noValidate autoComplete="off" onSubmit={onSubmit}>
                 <TextInput
                     label="Full Name"
@@ -158,20 +159,20 @@ SignUp.propTypes = {
     registerUser: PropTypes.func.isRequired,
     isAuthenticated:  PropTypes.bool.isRequired,
     user: PropTypes.object,
-    errors: PropTypes.string
+    error: PropTypes.string
 
 }
 SignUp.defaultProps = {
     loading: false,
     isAuthenticated: false,
     user: {},
-    errors: ""
+    error: ""
 }
 const mapStateToProps = state => ({
     loading: state.auth.loading,
     user: state.auth.user,
     isAuthenticated: state.auth.isAuthenticated,
-    errors: state.auth.errors
+    error: state.auth.error
 
 
 })
