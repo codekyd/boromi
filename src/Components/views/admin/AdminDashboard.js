@@ -9,6 +9,9 @@ import LoanItem from '../../Loans/LoanItem';
 import Loader from '../../Loader/Loader'
 import RequestTable from '../../LoanRequests/RequestTable';
 import RequestLayout from '../../LoanRequests/RequestLayout';
+import {Grid} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import {ButtonLink} from "../../Buttons/Buttons";
 
 
 const  AdminDashboard = ( {
@@ -29,6 +32,11 @@ const  AdminDashboard = ( {
 		<AppNav>
 			{/* checks if there are loans and display them */}
 			<LoansLayout title='All Loans'>
+				<Grid item md={8}>
+					<Button variant="contained">
+						<ButtonLink linkTo="/admin/loans/new" content="Create a new Loan"/>
+					</Button>
+				</Grid>
 				{ loanIsLoading && <Loader/> }
 				{ allLoans && !loanIsLoading && allLoans.map((loan) =><LoanItem key={loan.id} {...loan}/>)}
 			</LoansLayout>

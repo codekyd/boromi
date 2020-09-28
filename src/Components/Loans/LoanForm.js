@@ -70,7 +70,7 @@ const LoanForm = ({header,fetchedLoan, loading, action, error, successMsg, butto
     }
 
     return (
-        <LoansLayout>
+        <LoansLayout justify="center">
 
                <Grid item md={5}>
                    <Card className={classes.root}>
