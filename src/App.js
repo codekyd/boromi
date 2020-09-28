@@ -9,7 +9,7 @@ const App = ({ loadUser }) => {
 	useEffect(() => {
     const token = localStorage.getItem("token");
 			loadUser(JSON.stringify(token))
-	},[loadUser])
+	},[])
   return (
       <AppRouter/>
 

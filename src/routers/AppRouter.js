@@ -13,6 +13,8 @@ import NewLoan from '../Components/views/admin/NewLoan';
 import EditLoan from '../Components/views/admin/EditLoan';
 import NewLoanRequest from "../Components/views/user/NewLoanRequest";
 import Loans from "../Components/views/user/Loans";
+import LoanRequests from "../Components/views/user/LoanRequests";
+import AllLoansRequest from "../Components/views/admin/AllLoanRequest";
 
 
 const AppRouter = () => {
@@ -25,10 +27,12 @@ const AppRouter = () => {
 				<AdminRoute path='/admin'  component={AdminDashboard} exact/>
 				<AdminRoute path='/admin/loans'  exact component={AllLoans}/>
 				<AdminRoute path='/admin/loans/new' component={NewLoan}/>
+				<AdminRoute path='/admin/loan-requests' component={AllLoansRequest}/>
 				<AdminRoute path='/admin/loans/update/:id' component={EditLoan}/>
 				<AdminRoute path='/admin/loans/:id' component={SingleLoan}/>
 				<UserRoute path='/dashboard' component={Dashboard}/>
 				<UserRoute path='/loan-requests/new' component={NewLoanRequest}/>
+				<UserRoute path='/loan-requests/' component={LoanRequests}/>
 				<UserRoute path='/loans/' component={Loans}/>
 			</Switch>
 		</Router>

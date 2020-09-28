@@ -5,28 +5,30 @@ import { connect } from 'react-redux';
 import {loadUser} from "../actions/auth";
 
 // Private route to check if a user is authenticated
-const AdminRoute = ({ component: Component, auth: { isAuthenticated, loading},isAdmin,loadUser, ...rest}) => {
-	const token = localStorage.getItem("token")
-	useEffect(() => {
-			loadUser(JSON.stringify(token))
-	},[])
+const AdminRoute = ({ component: Component, auth: { isAuthenticated, loading},user,isAdmin,loadUser, ...rest}) => {
+	// const token = localStorage.getItem("token")
+	// useEffect(() => {
+	// 		loadUser(JSON.stringify(token))
+	// },[])
 	return(
 		<Route
 			{...rest}
-			render={props =>  !isAuthenticated && !loading && !isAdmin ?
+			render={props =>  !isAuthenticated ?
 				(<Redirect to="/login"/>) :
-				(!loading && isAuthenticated ? <Component {...props}/> : null)}/>
+				(!loading && isAuthenticated && user  ? <Component {...props}/> : null)}/>
 	)
 }
 
 AdminRoute.propTypes = {
 	auth: PropTypes.object.isRequired,
-	isAdmin: PropTypes.bool.isRequired
+	isAdmin: PropTypes.bool.isRequired,
+	user: PropTypes.object
 }
 
 const mapStateToProps = (state) => ({
 	auth: state.auth,
-	isAdmin: state.auth.user ? state.auth.user.isAdmin : false,
+	user: state.auth.user,
+	isAdmin: state.auth.user ? state.auth.user.isAdmin : false
 })
 
 

@@ -162,7 +162,8 @@ const mapStateToProps = state => ({
 	allLoansLoading: state.loans.loading,
 	user: state.auth.user,
 	allLoans: state.loans.allLoans,
-	successMsg: state.loanRequests.successMsg
+	successMsg: state.loanRequests.successMsg,
+	error: state.loanRequests.error
 });
 LoanRequestForm.propTypes = {
 	loading: PropTypes.bool.isRequired,
@@ -170,6 +171,6 @@ LoanRequestForm.propTypes = {
 	allLoans: PropTypes.array.isRequired,
 	getAllLoans: PropTypes.func.isRequired,
 	createNewLoanRequest: PropTypes.func.isRequired,
-	successMsg: PropTypes.string.isRequired
+	error: PropTypes.string.isRequired
 }
 export default connect(mapStateToProps, {getAllLoans,createNewLoanRequest})(LoanRequestForm)

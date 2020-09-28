@@ -78,7 +78,7 @@ export const updateLoanRequestByID = ( loanRequestID, loanRequest ) => async dis
         console.log(res);
         dispatch({
             type: UPDATE_LOAN_REQ_BY_ID_SUCCESS,
-            payload:{ loanRequestID, msg: res.data }
+            payload:{ id:loanRequestID, status: loanRequest.status, msg: res.data }
         })
     } catch (err) {
         dispatch({

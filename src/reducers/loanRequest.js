@@ -23,6 +23,7 @@ const initialState = {
 }
 export default (state = initialState, action) => {
     const { type, payload } = action;
+    // update the allLoanRequests because our fake server does not reply a data
     switch (type) {
         case CREATE_LOAN_REQ_REQUEST:
         case GET_ALL_LOAN_REQ_REQUEST:
@@ -59,11 +60,20 @@ export default (state = initialState, action) => {
                     error: ''
                 }
             case UPDATE_LOAN_REQ_BY_ID_SUCCESS:
+                // updates request here to update the UI since our fake server does not bring a return update
+                const updatedRequests = state.allLoanRequests.map((loanRequest) =>{
+                    console.log(payload)
+                    if(loanRequest.id === payload.id) {
+                        loanRequest.status = payload.status
+                        return loanRequest
+                    }
+                    return  loanRequest
+                })
                 return{
                     ...state,
                     loading: false,
+                    allLoanRequests: updatedRequests,
                     singleLoanRequest: null,
-                    allLoanRequests: state.allLoanRequests.map((loanRequest) => loanRequest.id === 1 ? loanRequest.status = "Modified" : state.allLoanRequests),
                     successMsg: payload.msg,
                     error: ''
                 }

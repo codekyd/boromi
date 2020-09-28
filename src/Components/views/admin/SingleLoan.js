@@ -47,7 +47,7 @@ const SingleLoan = ({
     dayjs.extend(relativeTime);
     const handleDeleteRequest = () => {
         deleteLoanByID(singleLoanID);
-        history.push('/loans')
+        history.push('/admin')
     }
     //  calculate the expected duration of the loan
     let chosenDay
@@ -59,7 +59,7 @@ const SingleLoan = ({
 
     return (
         <AppNav>
-                   <>
+            <>
                { loanIsLoading && <Loader/> }
                 {singleLoan && !loanIsLoading &&
                 <LoansLayout title={singleLoan.title}>
@@ -67,30 +67,29 @@ const SingleLoan = ({
                         <Card className={classes.root}>
                             <CardContent>
                                 <Typography variant='h6' gutterBottom>
-                                <Link to='/loans'>
-                           <Icon color='primary' fontSize='large'>
-                           <ArrowBackIcon/>
-						</Icon>
-                           </Link>
+                                    <Link to='/admin/loans'>
+                                    <Icon color='primary' fontSize='large'>
+                                        <ArrowBackIcon/>
+                                    </Icon>
+                                    </Link>
                                 </Typography>
-                            <Typography variant='h5' gutterBottom>
+                                <Typography variant='h5' gutterBottom>
                                 {singleLoan.title}
-                            </Typography>
-
-                            <Typography variant='body2' gutterBottom>
+                                </Typography>
+                                <Typography variant='body2' gutterBottom>
                                 { singleLoan.description }
-                            </Typography>
-                            <Typography variant='h5' gutterBottom>
+                                </Typography>
+                                <Typography variant='h5' gutterBottom>
                                 {formatMoney(singleLoan.amount)}
-                            </Typography>
-                            <Typography variant='body2' gutterBottom>
-                            Repayment   {
-                            expectedDay.fromNow()
-                            }
-                            </Typography>
+                                </Typography>
+                                <Typography variant='body2' gutterBottom>
+                                    Repayment   {
+                                    expectedDay.fromNow()
+                                    }
+                                </Typography>
                             </CardContent>
                             <CardActions className={classes.cardActions}>
-                                <ButtonLink linkTo={`/loans/update/${singleLoan.id}`} content='Update Loan'/>
+                                <ButtonLink linkTo={`/admin/loans/update/${singleLoan.id}`} content='Update Loan'/>
                                 <Button color='secondary' onClick={handleDeleteRequest}>Delete</Button>
                             </CardActions>
                         </Card>

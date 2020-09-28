@@ -87,7 +87,7 @@ const  AppNav = ({ window, children, logout, user }) => {
 			<div className={classes.toolbar} />
 			<Divider />
 			{ dashBoardLinks.map((link) => (
-							<List>
+							<List key={link.content}>
 							<ListItem button>
 								<ListItemText >
 									<ButtonLink

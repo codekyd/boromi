@@ -23,9 +23,9 @@ const LoanForm = ({header,fetchedLoan, loading, action, error, successMsg, butto
     const classes = useStyle()
 
     const initialState = {
-        title: fetchedLoan ? fetchedLoan.loan.title : "",
-        amount: fetchedLoan ? parseFloat(fetchedLoan.loan.amount ).toLocaleString("en-NG",{style: 'decimal'})  : 0,
-        interest: fetchedLoan ? fetchedLoan.loan.interest : 1,
+        title: fetchedLoan ? fetchedLoan.title : "",
+        amount: fetchedLoan ? parseFloat(fetchedLoan.amount ).toLocaleString("en-NG",{style: 'decimal'})  : 0,
+        interest: fetchedLoan ? fetchedLoan.interest : 1,
         maxPayBack: 3,
     }
     const [loanData, setLoanData] = useState(initialState);
@@ -65,7 +65,7 @@ const LoanForm = ({header,fetchedLoan, loading, action, error, successMsg, butto
         // sends a new or update loan request
         e.preventDefault()
         if(validateData()){
-           buttonTitle === "update" ?   action(loanData, fetchedLoan.loan.id) : action(loanData)
+           buttonTitle === "update" ?   action(loanData, fetchedLoan.id) : action(loanData)
         }
     }
 
@@ -79,7 +79,7 @@ const LoanForm = ({header,fetchedLoan, loading, action, error, successMsg, butto
                            {header}
                        </Typography>
                        <Typography variant="body2" gutterBottom>
-                           <Link to="/loans">
+                           <Link to="/admin">
                            <Icon color="primary" fontSize="large">
                            <ArrowBackIcon/>
 						</Icon>
