@@ -5,8 +5,6 @@
  */
 import { createServer, RestSerializer, Model, hasMany, belongsTo, Response} from 'miragejs';
 import dayjs from  'dayjs'
-import loan from './reducers/loan';
-import loanRequest from './reducers/loanRequest';
 
 export default  () => {
 	createServer({
@@ -245,7 +243,6 @@ export default  () => {
 			// creates a new loan request
 			this.post('/api/loanRequests', (schema, request) => {
 				let attrs = JSON.parse(request.requestBody);
-				let loanID = request.params.id
 				const existingRequest = schema.loanRequests.find({title:attrs.title})
 				if(existingRequest){
 					return new Response(400, { some: 'header' },

@@ -14,5 +14,5 @@ test('renders The App Component without errors', () => {
 
         return nodeHasText && childrenDontHaveText;
       })
-  ).toBeInTheDocument()
+    ).toBeInTheDocument()
 });
