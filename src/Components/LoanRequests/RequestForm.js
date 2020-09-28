@@ -111,6 +111,7 @@ const LoanRequestForm = ({ loading, user, successMsg, error, allLoans, getAllLoa
 							<MenuItem value="">Select  Loan Type</MenuItem>
 							{allLoans.map(loan =>
 								<MenuItem
+									key={loan.id}
 									value={loan.title}>
 									<span> {loan.title} </span>
 									<span> {formatMoney(loan.amount)} </span>
@@ -118,8 +119,6 @@ const LoanRequestForm = ({ loading, user, successMsg, error, allLoans, getAllLoa
 						</Select>
 						</>
 							}
-						{ loanInfo && <Typography variant="body2" gutterBottom>
-							Loan Duration: {dayjs(expectedDuration(loanInfo.maxPayBack)).fromNow()}</Typography> }
 						<InputLabel id="repaymentChoice">Select how you want to pay the loan if approved</InputLabel>
 						<Select
 							name="repaymentChoice"
@@ -146,7 +145,7 @@ const LoanRequestForm = ({ loading, user, successMsg, error, allLoans, getAllLoa
 	)
 }
 const mapStateToProps = state => ({
-	allLoansLoading: state.loans.loading,
+	loading: state.loans.loading,
 	user: state.auth.user,
 	allLoans: state.loans.allLoans,
 	successMsg: state.loanRequests.successMsg,
@@ -154,8 +153,6 @@ const mapStateToProps = state => ({
 });
 LoanRequestForm.propTypes = {
 	loading: PropTypes.bool.isRequired,
-	allLoansLoading: PropTypes.bool.isRequired,
-	allLoans: PropTypes.array.isRequired,
 	getAllLoans: PropTypes.func.isRequired,
 	createNewLoanRequest: PropTypes.func.isRequired,
 	error: PropTypes.string.isRequired

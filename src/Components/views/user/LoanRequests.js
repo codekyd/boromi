@@ -8,6 +8,7 @@ import {Grid} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 import {ButtonLink} from "../../Buttons/Buttons";
+import Typography from "@material-ui/core/Typography";
 
 const LoanRequests = ({ loading, allLoanRequests}) => {
 	return(
@@ -17,6 +18,9 @@ const LoanRequests = ({ loading, allLoanRequests}) => {
 					<ButtonLink linkTo="/loan-requests/new" content="Apply for a new Loan"/>
 				</Button>
 			</Grid>
+			{ !allLoanRequests && <Typography variant="h5">
+				No Loan Requests yet!
+			</Typography>}
 			{ !loading && allLoanRequests &&
 			<RequestLayout>
 				<RequestTable

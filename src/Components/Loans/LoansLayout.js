@@ -8,14 +8,17 @@ const LoansLayout = ({ children, title, justify }) => {
              <Typography variant="h6" gutterBottom>
                  {title}
             </Typography>
-            <Grid container spacing={5} justify={justify ? justify : ""}>
+            <Grid container spacing={5} justify={justify ? justify : "flex-start"}>
                 {children}
             </Grid>
         </>
     )
 }
 LoansLayout.propTypes = {
-    children: PropTypes.object.isRequired,
+    children: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array,
+    ]).isRequired,
     title: PropTypes.string,
     justify: PropTypes.string
 }

@@ -6,6 +6,7 @@ import LoansLayout from "../../Loans/LoansLayout";
 import LoanItem from "../../Loans/LoanItem";
 import PropTypes from 'prop-types'
 import { getLoanRequestsByUserID} from "../../../actions/loanRequest";
+import Typography from "@material-ui/core/Typography";
 
 const Loans = ({ user, loading, loanRequests, getLoanRequestsByUserID}) => {
 	useEffect(() => {
@@ -19,7 +20,12 @@ const Loans = ({ user, loading, loanRequests, getLoanRequestsByUserID}) => {
 
 		<AppNav>
 			{/* checks if there are loans and display them */}
+
 			{	loading ? <Loader/> :
+				<>
+				{ !loanRequests && <Typography variant="h5">
+				No Loan Found!
+				</Typography>}
 				<LoansLayout title="My Loans">
 					{ loanRequests && !loading &&
 					loanRequests.map((loanRequests) =>
@@ -27,6 +33,7 @@ const Loans = ({ user, loading, loanRequests, getLoanRequestsByUserID}) => {
 						          status={loanRequests.status}
 						          {...loanRequests.loan} />)}
 				</LoansLayout>
+				</>
 			}
 		</AppNav>
 

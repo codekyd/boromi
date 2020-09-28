@@ -10,6 +10,7 @@ import {ButtonLink} from "../../Buttons/Buttons";
 import Button from "@material-ui/core/Button";
 import {Grid} from "@material-ui/core";
 import PropTypes from 'prop-types'
+import Typography from "@material-ui/core/Typography";
 
 const Dashboard = ({ user,loanRequests,loading, getLoanRequestsByUserID }) => {
 
@@ -31,19 +32,30 @@ return(
 					<ButtonLink linkTo="/loan-requests/new" content="Apply for a new Loan"/>
 				</Button>
 			</Grid>
-			<LoansLayout title='My Approved Loans'>
-			{ approvedLoanRequests && approvedLoanRequests.map((request) =>
-				<LoanItem key={request.loan.id}
-				          {...request.loan}/>)}
-				 {/*loanIsLoading && <Loader/>*/}
-			</LoansLayout>
-				 {/*allLoans && allLoanRequests && !loanRequestIsLoading &&*/}
-					<RequestLayout>
-						<RequestTable
+
+		{ approvedLoanRequests.length > 0 ?
+			<LoansLayout title='My Approved Loans' justify="center">
+				{approvedLoanRequests.map((request) =>
+					<LoanItem key={request.loan.id}
+					          {...request.loan}/>)}
+			</LoansLayout> :
+			<Typography variant="h5">
+				No Loan Approved yet!
+			</Typography>
+			}
+		{
+			loanRequests.length === 0 ?
+				<Typography variant="h5">
+				No Loan Request Found!
+				</Typography> :
+				<RequestLayout>
+					<RequestTable
 						title="My Loan Requests"
 						loading={loading}
 						loanRequests={loanRequests}/>
-					</RequestLayout>
+				</RequestLayout>
+		}
+
 	</AppNav>
 )
 

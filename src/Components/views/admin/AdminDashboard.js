@@ -31,6 +31,7 @@ const  AdminDashboard = ( {
 	return(
 		<AppNav>
 			{/* checks if there are loans and display them */}
+
 			<LoansLayout title='All Loans'>
 				<Grid item md={8}>
 					<Button variant="contained">
