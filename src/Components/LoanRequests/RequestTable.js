@@ -50,7 +50,7 @@ const RequestTable = ({ title,loading, loanRequests, isAdmin }) => {
                 <Table className={classes.table} aria-label="Loan Request Table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Customer Name</TableCell>
+                      {isAdmin && <TableCell>Customer Name</TableCell>}
                       <TableCell align="right">Repayment Choice</TableCell>
                       <TableCell align="right">Date Requested</TableCell>
                       <TableCell align="right">Loan</TableCell>
@@ -62,9 +62,11 @@ const RequestTable = ({ title,loading, loanRequests, isAdmin }) => {
                   <TableBody>
                     { loanRequests && loanRequests.map((loanRequest) => (
                       <TableRow key={loanRequest.id}>
-                          <TableCell component="th" scope="loanRequest">
-                          {loanRequest.user.name}
+                        {
+                          isAdmin &&   <TableCell component="th" scope="loanRequest">
+                            {loanRequest.user.name}
                           </TableCell>
+                        }
                           <TableCell align="right">{loanRequest.repaymentChoice}</TableCell>
                           <TableCell align="right">{dayjs(loanRequest.dateRequested).format('DD/MM/YYYY')}</TableCell>
                           <TableCell align="right">{loanRequest.loan.title}</TableCell>

@@ -12,6 +12,7 @@ import AllLoans from '../Components/views/admin/AllLoans';
 import NewLoan from '../Components/views/admin/NewLoan';
 import EditLoan from '../Components/views/admin/EditLoan';
 import NewLoanRequest from "../Components/views/user/NewLoanRequest";
+import Loans from "../Components/views/user/Loans";
 
 
 const AppRouter = () => {
@@ -28,6 +29,7 @@ const AppRouter = () => {
 				<AdminRoute path='/admin/loans/:id' component={SingleLoan}/>
 				<UserRoute path='/dashboard' component={Dashboard}/>
 				<UserRoute path='/loan-requests/new' component={NewLoanRequest}/>
+				<UserRoute path='/loans/' component={Loans}/>
 			</Switch>
 		</Router>
 	)

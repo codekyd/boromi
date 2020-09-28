@@ -55,6 +55,7 @@ export default (state = initialState, action) => {
                     ...state,
                     loading: false,
                     allLoanRequests: payload,
+                    successMsg: '',
                     error: ''
                 }
             case UPDATE_LOAN_REQ_BY_ID_SUCCESS:

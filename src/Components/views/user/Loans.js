@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { connect} from "react-redux";
 import AppNav from "../../Drawer/Drawer";
 import Loader from "../../Loader/Loader";
@@ -7,14 +7,29 @@ import LoanItem from "../../Loans/LoanItem";
 import PropTypes from 'prop-types'
 import { getLoanRequestsByUserID} from "../../../actions/loanRequest";
 
-const Loans = ({ loading, loanRequests}) => {
+const Loans = ({ user, loading, loanRequests, getLoanRequestsByUserID}) => {
+	useEffect(() => {
+		if(user) {
+			getLoanRequestsByUserID(user.id)
+
+		}
+
+	},[getLoanRequestsByUserID, user])
+	let userLoanRequests = null;
+	if(loanRequests) {
+		userLoanRequests = loanRequests.filter((loanRequest) => loanRequest.status === 'approved')
+	}
 	return(
 
 		<AppNav>
 			{/* checks if there are loans and display them */}
 			{	loading ? <Loader/> :
-				<LoansLayout title="All Loans">
-					{ allLoans && !loading && allLoans.map((loan) =><LoanItem key={loan.id} {...loan}/>)}
+				<LoansLayout title="My Loans">
+					{ loanRequests && !loading &&
+					loanRequests.map((loanRequests) =>
+						<LoanItem key={loanRequests.loan.id}
+						          status={loanRequests.status}
+						          {...loanRequests.loan} />)}
 				</LoansLayout>
 			}
 		</AppNav>
